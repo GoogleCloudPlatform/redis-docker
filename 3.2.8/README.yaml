@@ -1,0 +1,88 @@
+# Used with http://github.com/GoogleCloudPlatform/runtimes-common/tree/master/docgen
+_templates:
+- &Image launcher.gcr.io/google/redis
+- &PullCommand gcloud docker -- pull launcher.gcr.io/google/redis
+- &ServiceArgs
+  name: redis
+  image: *Image
+- &BaseServerRun
+  <<: *ServiceArgs
+  exposedPorts:
+  - port: 6379
+- &BaseClientRun
+  name: redis
+  image: *Image
+  runType: INTERACTIVE_SHELL
+- &BaseExec
+  execType: INTERACTIVE_SHELL
+
+overview:
+  description: |-
+    This image contains an installation Redis 3.2.
+    
+    For more information, see the [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/redis3).
+  dockerfileUrl: https://github.com/GoogleCloudPlatform/redis-docker/tree/master/3.2.8
+  pullCommand: *PullCommand
+
+taskGroups:
+- title: Running Redis
+  tasks:
+  - title: Start a Redis Instance
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - run:
+        <<: *BaseServerRun
+  - title: Use a persistent data volume
+    description: |-
+      Redis is a in memory database, but does write the data to disk. We need to make sure the data is protected in the event of a container crash or restart. By defining a data volume we can ensure the data is retained.
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - run:
+        <<: *BaseServerRun
+        volumes:
+        - name: redisdata
+          path: /data
+          emptyPersistentVolume:
+            hostPath: /mnt/redisdata
+            subPath: redisdata
+- title: Configurations
+  description: There are several ways to configure your redis cluster.
+  anchorId: configurations
+  tasks:
+  - title: Using configuration volume
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - description: >-
+        You can start redis with a configuration file to customize or tweak how the cluster will run. Create a `redis.conf` file, then start redis with the redis configuration file as the first argument.
+      run:
+        <<: *BaseServerRun
+        arguments: ["/etc/redis/redis.conf"]
+        volumes:
+        - name: redisconfig
+          path: /etc/redis/
+          singleFile:
+            hostFile: /mnt/redisconfig/redis.conf
+    - description: >-
+        See [Volume reference](#references-volumes) for more details.
+- title: Redis CLI
+  description: Now that it's deployed you can connect to the container.
+  tasks:
+  - title: Connect to a running Redis container
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - exec:
+        <<: *BaseExec
+        containerName: some-redis
+        command: redis-cli
+
+portReference:
+  ports:
+  - port: '6379'
+    description: Redis port
+
+volumeReference:
+  volumes:
+  - path: /etc/redis/redis.conf
+    description: Location to the mounted configmap to configure redis
+  - path: /data
+    description: Location where redis will stores the rdb data
