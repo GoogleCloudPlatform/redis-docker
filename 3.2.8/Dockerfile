@@ -16,14 +16,14 @@ RUN set -x \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
-    && gosu nobody true 
+    && gosu nobody true
 # Install Redis Search
 ENV REDIS_VERSION 3.2
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-3.2.8.tar.gz
-ENV REDIS_DOWNLOAD_SHA1 6780d1abb66f33a97aad0edbe020403d0a15b67f 
+ENV REDIS_DOWNLOAD_SHA1 6780d1abb66f33a97aad0edbe020403d0a15b67f
 # Set the redis user
 RUN useradd redis
-# Compile redis,  keep source code in /usr/src dir 
+# Compile redis,  keep source code in /usr/src dir
 RUN buildDeps='gcc libc6-dev make' \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
@@ -39,9 +39,9 @@ RUN buildDeps='gcc libc6-dev make' \
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
-# Download Apache 2.0 License
+# Copy BSD License
 RUN mkdir -p /usr/share/redis
-RUN wget -q http://www.apache.org/licenses/LICENSE-2.0.txt -O /usr/share/redis/LICENSE
+COPY LICENSE /usr/share/redis/
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]

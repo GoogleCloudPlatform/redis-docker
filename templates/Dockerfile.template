@@ -42,9 +42,9 @@ RUN buildDeps='gcc libc6-dev make' \
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
-# Download Apache 2.0 License
+# Copy BSD License
 RUN mkdir -p /usr/share/redis
-RUN wget -q http://www.apache.org/licenses/LICENSE-2.0.txt -O /usr/share/redis/LICENSE
+COPY LICENSE /usr/share/redis/
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]
