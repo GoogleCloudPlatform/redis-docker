@@ -1,4 +1,4 @@
-# <a name="about"a></a>About
+# <a name="about"></a>About
 
 This image contains an installation Redis 3.2.
 
