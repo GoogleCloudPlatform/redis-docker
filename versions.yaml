@@ -25,6 +25,7 @@
 
 versions:
   - dir: '3.2.8'
+    repo: redis3
     tags:
       - 3.2.8
       - latest
@@ -37,5 +38,3 @@ versions:
         gpg: 6780d1abb66f33a97aad0edbe020403d0a15b67f
         version: 3.2.8
         major: 3.2
-
-
