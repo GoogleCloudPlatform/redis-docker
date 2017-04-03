@@ -25,8 +25,8 @@
 
 # Used with http://github.com/GoogleCloudPlatform/runtimes-common/tree/master/docgen
 _templates:
-- &Image launcher.gcr.io/google/redis
-- &PullCommand gcloud docker -- pull launcher.gcr.io/google/redis
+- &Image launcher.gcr.io/google/redis3
+- &PullCommand gcloud docker -- pull launcher.gcr.io/google/redis3
 - &ServiceArgs
   name: redis
   image: *Image
@@ -57,38 +57,6 @@ taskGroups:
     instructions:
     - run:
         <<: *BaseServerRun
-  - title: Use a persistent data volume
-    description: |-
-      Redis is a in memory database, but does write the data to disk. We need to make sure the data is protected in the event of a container crash or restart. By defining a data volume we can ensure the data is retained.
-    runtimes: [DOCKER, KUBERNETES]
-    instructions:
-    - run:
-        <<: *BaseServerRun
-        volumes:
-        - name: redisdata
-          path: /data
-          emptyPersistentVolume:
-            hostPath: /mnt/redisdata
-            subPath: redisdata
-- title: Configurations
-  description: There are several ways to configure your redis cluster.
-  anchorId: configurations
-  tasks:
-  - title: Using configuration volume
-    runtimes: [DOCKER, KUBERNETES]
-    instructions:
-    - description: >-
-        You can start redis with a configuration file to customize or tweak how the cluster will run. Create a `redis.conf` file, then start redis with the redis configuration file as the first argument.
-      run:
-        <<: *BaseServerRun
-        arguments: ["/etc/redis/redis.conf"]
-        volumes:
-        - name: redisconfig
-          path: /etc/redis/
-          singleFile:
-            hostFile: /mnt/redisconfig/redis.conf
-    - description: >-
-        See [Volume reference](#references-volumes) for more details.
 - title: Redis CLI
   description: Now that it's deployed you can connect to the container.
   tasks:
@@ -99,6 +67,52 @@ taskGroups:
         <<: *BaseExec
         containerName: some-redis
         command: redis-cli
+        subcommands:
+        - description: To test if redis is working we create a key called MY_TEST_KEY. Run the following command to set a test key.
+          command: SET MY_TEST_KEY pass
+        - description: Run the following command to verify that the set command above succeeded. This should print out "pass".
+          command: GET MY_TEST_KEY
+- title: Adding persistence
+  description: |-
+    Redis is a in memory database, but does write data to disk periodically. The location of this dump file can be found at `/data/dump.rdb`.
+
+    The container is built with a default VOLUME of `/data`. The data will survive a reboot but if the container is moved then the data will be lost.
+
+    You can find more about redis persistence on the [redis website](https://redis.io/topics/persistence).
+
+  tasks:
+  - title: Use a persistent data volume
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - run:
+        <<: *BaseServerRun
+        volumes:
+        - name: redisdata
+          path: /data
+          emptyPersistentVolume:
+            hostPath: /path/to/your/redis/data/directory
+            subPath: redisdata
+- title: Configurations
+  anchorId: configurations
+  tasks:
+  - title: Using configuration volume
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - description: |-
+        You can start redis with a configuration file to customize or tweak how the cluster will run. This file is commonly named `redis.conf`. We start redis with the configuration file as an argument.
+
+        Assume /path/to/your/redis/config is the local directory on your machine, we can get the configuration file into the container with the options below.
+      run:
+        <<: *BaseServerRun
+        arguments: ["/etc/redis/redis.conf"]
+        volumes:
+        - name: redisconfig
+          path: /etc/redis/
+          singleFile:
+            hostFile: /path/to/your/redis/config/redis.conf
+    - description: >-
+        See [Volume reference](#references-volumes) for more details.
+
 
 portReference:
   ports:

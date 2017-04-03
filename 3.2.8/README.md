@@ -6,7 +6,7 @@ For more information, see the [Official Image Launcher Page](https://console.clo
 
 Pull command:
 ```shell
-gcloud docker -- pull launcher.gcr.io/google/redis
+gcloud docker -- pull launcher.gcr.io/google/redis3
 ```
 
 Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlatform/redis-docker/tree/master/3.2.8).
@@ -15,19 +15,21 @@ Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlat
 * [Using Kubernetes](#using-kubernetes)
   * [Running Redis](#running-redis-kubernetes)
     * [Start a Redis Instance](#start-a-redis-instance-kubernetes)
+  * [Redis CLI](#redis-cli-kubernetes)
+    * [Connect to a running Redis container](#connect-to-a-running-redis-container-kubernetes)
+  * [Adding persistence](#adding-persistence-kubernetes)
     * [Use a persistent data volume](#use-a-persistent-data-volume-kubernetes)
   * [Configurations](#configurations-kubernetes)
     * [Using configuration volume](#using-configuration-volume-kubernetes)
-  * [Redis CLI](#redis-cli-kubernetes)
-    * [Connect to a running Redis container](#connect-to-a-running-redis-container-kubernetes)
 * [Using Docker](#using-docker)
   * [Running Redis](#running-redis-docker)
     * [Start a Redis Instance](#start-a-redis-instance-docker)
+  * [Redis CLI](#redis-cli-docker)
+    * [Connect to a running Redis container](#connect-to-a-running-redis-container-docker)
+  * [Adding persistence](#adding-persistence-docker)
     * [Use a persistent data volume](#use-a-persistent-data-volume-docker)
   * [Configurations](#configurations-docker)
     * [Using configuration volume](#using-configuration-volume-docker)
-  * [Redis CLI](#redis-cli-docker)
-    * [Connect to a running Redis container](#connect-to-a-running-redis-container-docker)
 * [References](#references)
   * [Ports](#references-ports)
   * [Volumes](#references-volumes)
@@ -48,7 +50,7 @@ metadata:
     name: some-redis
 spec:
   containers:
-    - image: launcher.gcr.io/google/redis
+    - image: launcher.gcr.io/google/redis3
       name: redis
 ```
 
@@ -58,9 +60,35 @@ kubectl expose pod some-redis --name some-redis-6379 \
   --type LoadBalancer --port 6379 --protocol TCP
 ```
 
-### <a name="use-a-persistent-data-volume-kubernetes"></a>Use a persistent data volume
+## <a name="redis-cli-kubernetes"></a>Redis CLI
 
-Redis is a in memory database, but does write the data to disk. We need to make sure the data is protected in the event of a container crash or restart. By defining a data volume we can ensure the data is retained.
+Now that it's deployed you can connect to the container.
+
+### <a name="connect-to-a-running-redis-container-kubernetes"></a>Connect to a running Redis container
+
+```shell
+kubectl exec -it some-redis -- redis-cli
+```
+
+To test if redis is working we create a key called MY_TEST_KEY. Run the following command to set a test key.
+```
+SET MY_TEST_KEY pass
+```
+
+Run the following command to verify that the set command above succeeded. This should print out "pass".
+```
+GET MY_TEST_KEY
+```
+
+## <a name="adding-persistence-kubernetes"></a>Adding persistence
+
+Redis is a in memory database, but does write data to disk periodically. The location of this dump file can be found at `/data/dump.rdb`.
+
+The container is built with a default VOLUME of `/data`. The data will survive a reboot but if the container is moved then the data will be lost.
+
+You can find more about redis persistence on the [redis website](https://redis.io/topics/persistence).
+
+### <a name="use-a-persistent-data-volume-kubernetes"></a>Use a persistent data volume
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
 ```yaml
@@ -72,7 +100,7 @@ metadata:
     name: some-redis
 spec:
   containers:
-    - image: launcher.gcr.io/google/redis
+    - image: launcher.gcr.io/google/redis3
       name: redis
       volumeMounts:
         - name: redisdata
@@ -105,16 +133,16 @@ kubectl expose pod some-redis --name some-redis-6379 \
 
 ## <a name="configurations-kubernetes"></a>Configurations
 
-There are several ways to configure your redis cluster.
-
 ### <a name="using-configuration-volume-kubernetes"></a>Using configuration volume
 
-You can start redis with a configuration file to customize or tweak how the cluster will run. Create a `redis.conf` file, then start redis with the redis configuration file as the first argument.
+You can start redis with a configuration file to customize or tweak how the cluster will run. This file is commonly named `redis.conf`. We start redis with the configuration file as an argument.
+
+Assume /path/to/your/redis/config is the local directory on your machine, we can get the configuration file into the container with the options below.
 
 Create the following `configmap`:
 ```shell
 kubectl create configmap redisconfig \
-  --from-file=/mnt/redisconfig/redis.conf
+  --from-file=/path/to/your/redis/config/redis.conf
 ```
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
@@ -127,7 +155,7 @@ metadata:
     name: some-redis
 spec:
   containers:
-    - image: launcher.gcr.io/google/redis
+    - image: launcher.gcr.io/google/redis3
       name: redis
       args:
         - /etc/redis/redis.conf
@@ -148,16 +176,6 @@ kubectl expose pod some-redis --name some-redis-6379 \
 
 See [Volume reference](#references-volumes) for more details.
 
-## <a name="redis-cli-kubernetes"></a>Redis CLI
-
-Now that it's deployed you can connect to the container.
-
-### <a name="connect-to-a-running-redis-container-kubernetes"></a>Connect to a running Redis container
-
-```shell
-kubectl exec -it some-redis -- redis-cli
-```
-
 # <a name="using-docker"></a>Using Docker
 
 ## <a name="running-redis-docker"></a>Running Redis
@@ -169,7 +187,7 @@ Use the following content for the `docker-compose.yml` file, then run `docker-co
 version: '2'
 services:
   redis:
-    image: launcher.gcr.io/google/redis
+    image: launcher.gcr.io/google/redis3
 ```
 
 Or you can use `docker run` directly:
@@ -178,65 +196,8 @@ Or you can use `docker run` directly:
 docker run \
   --name some-redis \
   -d \
-  launcher.gcr.io/google/redis
+  launcher.gcr.io/google/redis3
 ```
-
-### <a name="use-a-persistent-data-volume-docker"></a>Use a persistent data volume
-
-Redis is a in memory database, but does write the data to disk. We need to make sure the data is protected in the event of a container crash or restart. By defining a data volume we can ensure the data is retained.
-
-Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
-```yaml
-version: '2'
-services:
-  redis:
-    image: launcher.gcr.io/google/redis
-    volumes:
-      - /mnt/redisdata:/data
-```
-
-Or you can use `docker run` directly:
-
-```shell
-docker run \
-  --name some-redis \
-  -v /mnt/redisdata:/data \
-  -d \
-  launcher.gcr.io/google/redis
-```
-
-## <a name="configurations-docker"></a>Configurations
-
-There are several ways to configure your redis cluster.
-
-### <a name="using-configuration-volume-docker"></a>Using configuration volume
-
-You can start redis with a configuration file to customize or tweak how the cluster will run. Create a `redis.conf` file, then start redis with the redis configuration file as the first argument.
-
-Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
-```yaml
-version: '2'
-services:
-  redis:
-    image: launcher.gcr.io/google/redis \
-    command:
-      - /etc/redis/redis.conf
-    volumes:
-      - /mnt/redisconfig/redis.conf:/etc/redis/redis.conf
-```
-
-Or you can use `docker run` directly:
-
-```shell
-docker run \
-  --name some-redis \
-  -v /mnt/redisconfig/redis.conf:/etc/redis/redis.conf \
-  -d \
-  launcher.gcr.io/google/redis \
-  /etc/redis/redis.conf
-```
-
-See [Volume reference](#references-volumes) for more details.
 
 ## <a name="redis-cli-docker"></a>Redis CLI
 
@@ -247,6 +208,79 @@ Now that it's deployed you can connect to the container.
 ```shell
 docker exec -it some-redis redis-cli
 ```
+
+To test if redis is working we create a key called MY_TEST_KEY. Run the following command to set a test key.
+```
+SET MY_TEST_KEY pass
+```
+
+Run the following command to verify that the set command above succeeded. This should print out "pass".
+```
+GET MY_TEST_KEY
+```
+
+## <a name="adding-persistence-docker"></a>Adding persistence
+
+Redis is a in memory database, but does write data to disk periodically. The location of this dump file can be found at `/data/dump.rdb`.
+
+The container is built with a default VOLUME of `/data`. The data will survive a reboot but if the container is moved then the data will be lost.
+
+You can find more about redis persistence on the [redis website](https://redis.io/topics/persistence).
+
+### <a name="use-a-persistent-data-volume-docker"></a>Use a persistent data volume
+
+Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+```yaml
+version: '2'
+services:
+  redis:
+    image: launcher.gcr.io/google/redis3
+    volumes:
+      - /path/to/your/redis/data/directory:/data
+```
+
+Or you can use `docker run` directly:
+
+```shell
+docker run \
+  --name some-redis \
+  -v /path/to/your/redis/data/directory:/data \
+  -d \
+  launcher.gcr.io/google/redis3
+```
+
+## <a name="configurations-docker"></a>Configurations
+
+### <a name="using-configuration-volume-docker"></a>Using configuration volume
+
+You can start redis with a configuration file to customize or tweak how the cluster will run. This file is commonly named `redis.conf`. We start redis with the configuration file as an argument.
+
+Assume /path/to/your/redis/config is the local directory on your machine, we can get the configuration file into the container with the options below.
+
+Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+```yaml
+version: '2'
+services:
+  redis:
+    image: launcher.gcr.io/google/redis3 \
+    command:
+      - /etc/redis/redis.conf
+    volumes:
+      - /path/to/your/redis/config/redis.conf:/etc/redis/redis.conf
+```
+
+Or you can use `docker run` directly:
+
+```shell
+docker run \
+  --name some-redis \
+  -v /path/to/your/redis/config/redis.conf:/etc/redis/redis.conf \
+  -d \
+  launcher.gcr.io/google/redis3 \
+  /etc/redis/redis.conf
+```
+
+See [Volume reference](#references-volumes) for more details.
 
 # <a name="references"></a>References
 
