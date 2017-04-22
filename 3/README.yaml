@@ -44,45 +44,26 @@ _templates:
 overview:
   description: |-
     This image contains an installation Redis 3.2.
-    
+
     For more information, see the [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/redis3).
   dockerfileUrl: https://github.com/GoogleCloudPlatform/redis-docker/tree/master/3.2.8
   pullCommand: *PullCommand
 
 taskGroups:
+
 - title: Running Redis
   tasks:
-  - title: Start a Redis Instance
+  - title: Starting a Redis instance
     runtimes: [DOCKER, KUBERNETES]
     instructions:
     - run:
         <<: *BaseServerRun
-- title: Redis CLI
-  description: Now that it's deployed you can connect to the container.
-  tasks:
-  - title: Connect to a running Redis container
+  - title: Adding persistence
     runtimes: [DOCKER, KUBERNETES]
-    instructions:
-    - exec:
-        <<: *BaseExec
-        containerName: some-redis
-        command: redis-cli
-        subcommands:
-        - description: To test if redis is working we create a key called MY_TEST_KEY. Run the following command to set a test key.
-          command: SET MY_TEST_KEY pass
-        - description: Run the following command to verify that the set command above succeeded. This should print out "pass".
-          command: GET MY_TEST_KEY
-- title: Adding persistence
-  description: |-
-    Redis is a in memory database, but does write data to disk periodically. The location of this dump file can be found at `/data/dump.rdb`.
+    description: |-
+      Redis is an in-memory database but does write data to disk periodically for recovery. The location of this dump file can be found at `/data/dump.rdb`. By putting `/data` on to a persistent volume, the data will survive container restarts.
 
-    The container is built with a default VOLUME of `/data`. The data will survive a reboot but if the container is moved then the data will be lost.
-
-    You can find more about redis persistence on the [redis website](https://redis.io/topics/persistence).
-
-  tasks:
-  - title: Use a persistent data volume
-    runtimes: [DOCKER, KUBERNETES]
+      You can find more about redis persistence on the [redis website](https://redis.io/topics/persistence).
     instructions:
     - run:
         <<: *BaseServerRun
@@ -92,6 +73,22 @@ taskGroups:
           emptyPersistentVolume:
             hostPath: /path/to/your/redis/data/directory
             subPath: redisdata
+
+- title: Redis CLI
+  tasks:
+  - title: Connecting to a running Redis container
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - exec:
+        <<: *BaseExec
+        containerFromRun: *BaseServerRun
+        command: redis-cli
+        subcommands:
+        - description: To test if redis is working we create a key called MY_TEST_KEY. Run the following command to set a test key.
+          command: SET MY_TEST_KEY pass
+        - description: Run the following command to verify that the set command above succeeded. This should print out "pass".
+          command: GET MY_TEST_KEY
+
 - title: Configurations
   anchorId: configurations
   tasks:
@@ -99,17 +96,17 @@ taskGroups:
     runtimes: [DOCKER, KUBERNETES]
     instructions:
     - description: |-
-        You can start redis with a configuration file to customize or tweak how the cluster will run. This file is commonly named `redis.conf`. We start redis with the configuration file as an argument.
+        Redis can be started with a configuration file to customize or tweak how the cluster will run. This file is commonly named `redis.conf`.
 
-        Assume /path/to/your/redis/config is the local directory on your machine, we can get the configuration file into the container with the options below.
+        Assume /path/to/your/redis.conf is the configuration file on your local host.
       run:
         <<: *BaseServerRun
         arguments: ["/etc/redis/redis.conf"]
         volumes:
         - name: redisconfig
-          path: /etc/redis/
+          path: /etc/redis
           singleFile:
-            hostFile: /path/to/your/redis/config/redis.conf
+            hostFile: /path/to/your/redis.conf
     - description: >-
         See [Volume reference](#references-volumes) for more details.
 
@@ -121,7 +118,5 @@ portReference:
 
 volumeReference:
   volumes:
-  - path: /etc/redis/redis.conf
-    description: Location to the mounted configmap to configure redis
   - path: /data
     description: Location where redis will stores the rdb data
