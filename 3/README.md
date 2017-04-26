@@ -1,6 +1,6 @@
 # <a name="about"></a>About
 
-This image contains an installation Redis 3.2.
+This image contains an installation Redis 3.x.
 
 For more information, see the [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/redis3).
 
@@ -9,7 +9,7 @@ Pull command:
 gcloud docker -- pull launcher.gcr.io/google/redis3
 ```
 
-Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlatform/redis-docker/tree/master/3.2.8).
+Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlatform/redis-docker/tree/master/3).
 
 # <a name="table-of-contents"></a>Table of Contents
 * [Using Kubernetes](#using-kubernetes)

@@ -43,10 +43,10 @@ _templates:
 
 overview:
   description: |-
-    This image contains an installation Redis 3.2.
+    This image contains an installation Redis 3.x.
 
     For more information, see the [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/redis3).
-  dockerfileUrl: https://github.com/GoogleCloudPlatform/redis-docker/tree/master/3.2.8
+  dockerfileUrl: https://github.com/GoogleCloudPlatform/redis-docker/tree/master/3
   pullCommand: *PullCommand
 
 taskGroups:
