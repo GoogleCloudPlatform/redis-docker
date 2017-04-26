@@ -1,29 +1,32 @@
 FROM gcr.io/google-appengine/debian
-# set redis varable and some redis hashes
+
 # add gosu for easy step-down from root
 ENV GOSU_VERSION 1.10
 RUN set -x \
 	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates wget && rm -rf /var/lib/apt/lists/* \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
-# copy source /usr/local/src OSS compliance
-        && wget -O gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
+	# copy source /usr/local/src OSS compliance
+	&& wget -O gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 	&& tar -xvf gosu.tar.gz -C /usr/local/src \
 	&& rm gosu.tar.gz \
-# extract gosu binary and check signature
+	# extract gosu binary and check signature
 	&& export GNUPGHOME="$(mktemp -d)" \
 	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
-    && gosu nobody true
+	&& gosu nobody true
+
 # Install Redis Search
 ENV REDIS_VERSION 3.2
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-3.2.8.tar.gz
 ENV REDIS_DOWNLOAD_SHA1 6780d1abb66f33a97aad0edbe020403d0a15b67f
+
 # Set the redis user
 RUN useradd redis
-# Compile redis,  keep source code in /usr/src dir
+
+# Compile redis, keep source code in /usr/src dir
 RUN buildDeps='gcc libc6-dev make' \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
@@ -36,14 +39,18 @@ RUN buildDeps='gcc libc6-dev make' \
 	&& make -C /usr/src/redis \
 	&& make -C /usr/src/redis install \
 	&& apt-get purge -y --auto-remove $buildDeps
+
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
+
 # Copy BSD License
 RUN mkdir -p /usr/share/redis
 COPY LICENSE /usr/share/redis/
+
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]
+
 EXPOSE 6379
 CMD [ "redis-server" ]
