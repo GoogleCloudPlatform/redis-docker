@@ -24,7 +24,7 @@ RUN set -x \
 # Install Redis Search
 ENV REDIS_VERSION {{ $redis.Major }}
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-{{ $redis.Version }}.tar.gz
-ENV REDIS_DOWNLOAD_SHA1 {{ $redis.Gpg }}
+ENV REDIS_DOWNLOAD_SHA1 {{ $redis.Sha1 }}
 
 # Set the redis user
 RUN useradd redis

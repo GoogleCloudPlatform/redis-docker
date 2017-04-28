@@ -35,6 +35,6 @@ versions:
         version: '1.10'
         gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       redis:
-        gpg: 6780d1abb66f33a97aad0edbe020403d0a15b67f
+        sha1: 6780d1abb66f33a97aad0edbe020403d0a15b67f
         version: 3.2.8
         major: 3.2
