@@ -5,6 +5,7 @@ This image contains an installation Redis 3.x.
 For more information, see the [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/redis3).
 
 Pull command:
+
 ```shell
 gcloud docker -- pull launcher.gcr.io/google/redis3
 ```
@@ -39,6 +40,7 @@ Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlat
 ### <a name="starting-a-redis-instance-kubernetes"></a>Starting a Redis instance
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -53,6 +55,7 @@ spec:
 ```
 
 Run the following to expose the port:
+
 ```shell
 kubectl expose pod some-redis --name some-redis-6379 \
   --type LoadBalancer --port 6379 --protocol TCP
@@ -65,6 +68,7 @@ Redis is an in-memory database but does write data to disk periodically for reco
 You can find more about redis persistence on the [redis website](https://redis.io/topics/persistence).
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -100,6 +104,7 @@ spec:
 ```
 
 Run the following to expose the port:
+
 ```shell
 kubectl expose pod some-redis --name some-redis-6379 \
   --type LoadBalancer --port 6379 --protocol TCP
@@ -114,11 +119,13 @@ kubectl exec -it some-redis -- redis-cli
 ```
 
 To test if redis is working we create a key called MY_TEST_KEY. Run the following command to set a test key.
+
 ```
 SET MY_TEST_KEY pass
 ```
 
 Run the following command to verify that the set command above succeeded. This should print out "pass".
+
 ```
 GET MY_TEST_KEY
 ```
@@ -132,12 +139,14 @@ Redis can be started with a configuration file to customize or tweak how the clu
 Assume /path/to/your/redis.conf is the configuration file on your local host.
 
 Create the following `configmap`:
+
 ```shell
 kubectl create configmap redisconfig \
   --from-file=/path/to/your/redis.conf
 ```
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -161,6 +170,7 @@ spec:
 ```
 
 Run the following to expose the port:
+
 ```shell
 kubectl expose pod some-redis --name some-redis-6379 \
   --type LoadBalancer --port 6379 --protocol TCP
@@ -175,6 +185,7 @@ See [Volume reference](#references-volumes) for more details.
 ### <a name="starting-a-redis-instance-docker"></a>Starting a Redis instance
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
 ```yaml
 version: '2'
 services:
@@ -199,6 +210,7 @@ Redis is an in-memory database but does write data to disk periodically for reco
 You can find more about redis persistence on the [redis website](https://redis.io/topics/persistence).
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
 ```yaml
 version: '2'
 services:
@@ -228,11 +240,13 @@ docker exec -it some-redis redis-cli
 ```
 
 To test if redis is working we create a key called MY_TEST_KEY. Run the following command to set a test key.
+
 ```
 SET MY_TEST_KEY pass
 ```
 
 Run the following command to verify that the set command above succeeded. This should print out "pass".
+
 ```
 GET MY_TEST_KEY
 ```
@@ -246,6 +260,7 @@ Redis can be started with a configuration file to customize or tweak how the clu
 Assume /path/to/your/redis.conf is the configuration file on your local host.
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
 ```yaml
 version: '2'
 services:
