@@ -24,7 +24,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 versions:
-  - dir: '3/3.2.8'
+  - dir: '3/3.2'
     repo: redis3
     tags:
       - 3.2.8
