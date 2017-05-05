@@ -23,7 +23,7 @@ RUN set -x \
 	&& rm gosu.tar.gz \
 	# extract gosu binary and check signature
 	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys {{ $gosu.Gpg }} \
+	&& gpg --keyserver pgp.mit.edu --recv-keys {{ $gosu.Gpg }} \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
