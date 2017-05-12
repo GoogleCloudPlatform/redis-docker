@@ -30,7 +30,7 @@ versions:
       - 3.2.8
       - 3.2
       - latest
-    from: &from gcr.io/google-appengine/debian
+    from: &from gcr.io/google-appengine/debian8
     packages:
       gosu: &gosu
         version: '1.10'
