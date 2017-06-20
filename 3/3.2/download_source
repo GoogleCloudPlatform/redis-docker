@@ -77,7 +77,7 @@ function download_source_code() {
   local -r target_dir="$1"
   local -r src_list_file="/etc/apt/sources.list.d/all-src.list"
 
-  if ! [[ -e "${BLACKLIST_FILE}" ]]; then
+  if ! [[ -f "${BLACKLIST_FILE}" ]]; then
     echo "No package blacklist found. This might download a lot of code."
     echo "If it is really desired, run with argument 'blacklist-nothing' first."
     exit 1
