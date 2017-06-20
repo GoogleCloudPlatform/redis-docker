@@ -55,9 +55,11 @@ function exclude_sources() {
 }
 
 function all_sources_list_files() {
+  shopt -s nullglob
   for sources_file in /etc/apt/sources.list /etc/apt/sources.list.d/*; do
     echo "${sources_file}"
   done
+  shopt -u nullglob
 }
 
 function deb_srcs() {
