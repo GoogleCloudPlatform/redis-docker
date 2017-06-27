@@ -27,8 +27,8 @@ versions:
   - dir: '3/3.2'
     repo: redis3
     tags:
-      - 3.2.8
-      - 3.2
+      - '3.2.8'
+      - '3.2'
       - latest
     from: &from gcr.io/google-appengine/debian8
     packages:
@@ -37,5 +37,5 @@ versions:
         gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       redis:
         sha1: 6780d1abb66f33a97aad0edbe020403d0a15b67f
-        version: 3.2.8
-        major: 3.2
+        version: '3.2.8'
+        major: '3.2'
