@@ -192,6 +192,8 @@ services:
   redis:
     container_name: some-redis
     image: launcher.gcr.io/google/redis3
+    ports:
+      - '6379:6379'
 ```
 
 Or you can use `docker run` directly:
@@ -199,6 +201,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-redis \
+  -p 6379:6379 \
   -d \
   launcher.gcr.io/google/redis3
 ```
@@ -217,6 +220,8 @@ services:
   redis:
     container_name: some-redis
     image: launcher.gcr.io/google/redis3
+    ports:
+      - '6379:6379'
     volumes:
       - /path/to/your/redis/data/directory:/data
 ```
@@ -226,6 +231,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-redis \
+  -p 6379:6379 \
   -v /path/to/your/redis/data/directory:/data \
   -d \
   launcher.gcr.io/google/redis3
@@ -269,6 +275,8 @@ services:
     image: launcher.gcr.io/google/redis3 \
     command:
       - /etc/redis/redis.conf
+    ports:
+      - '6379:6379'
     volumes:
       - /path/to/your/redis.conf:/etc/redis/redis.conf
 ```
@@ -278,6 +286,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-redis \
+  -p 6379:6379 \
   -v /path/to/your/redis.conf:/etc/redis/redis.conf \
   -d \
   launcher.gcr.io/google/redis3 \
