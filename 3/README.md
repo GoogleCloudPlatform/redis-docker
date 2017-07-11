@@ -4,7 +4,7 @@ This image contains an installation Redis 3.x.
 
 For more information, see the [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/redis3).
 
-Pull command:
+Pull command (first install [gcloud](https://cloud.google.com/sdk/downloads)):
 
 ```shell
 gcloud docker -- pull launcher.gcr.io/google/redis3
@@ -35,6 +35,9 @@ Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlat
 
 # <a name="using-kubernetes"></a>Using Kubernetes
 
+Consult [Launcher container documentation](https://cloud.google.com/launcher/docs/launcher-container)
+for additional information about setting up your Kubernetes environment.
+
 ## <a name="running-redis-kubernetes"></a>Running Redis
 
 ### <a name="starting-a-redis-instance-kubernetes"></a>Starting a Redis instance
@@ -54,7 +57,10 @@ spec:
       name: redis
 ```
 
-Run the following to expose the port:
+Run the following to expose the port.
+Depending on your cluster setup, this might expose your service to the
+Internet with an external IP address. For more information, consult
+[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/).
 
 ```shell
 kubectl expose pod some-redis --name some-redis-6379 \
@@ -103,7 +109,10 @@ spec:
       storage: 5Gi
 ```
 
-Run the following to expose the port:
+Run the following to expose the port.
+Depending on your cluster setup, this might expose your service to the
+Internet with an external IP address. For more information, consult
+[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/).
 
 ```shell
 kubectl expose pod some-redis --name some-redis-6379 \
@@ -169,7 +178,10 @@ spec:
         name: redisconfig
 ```
 
-Run the following to expose the port:
+Run the following to expose the port.
+Depending on your cluster setup, this might expose your service to the
+Internet with an external IP address. For more information, consult
+[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/).
 
 ```shell
 kubectl expose pod some-redis --name some-redis-6379 \
@@ -179,6 +191,9 @@ kubectl expose pod some-redis --name some-redis-6379 \
 See [Volume reference](#references-volumes) for more details.
 
 # <a name="using-docker"></a>Using Docker
+
+Consult [Launcher container documentation](https://cloud.google.com/launcher/docs/launcher-container)
+for additional information about setting up your Docker environment.
 
 ## <a name="running-redis-docker"></a>Running Redis
 
@@ -192,6 +207,8 @@ services:
   redis:
     container_name: some-redis
     image: launcher.gcr.io/google/redis3
+    ports:
+      - '6379:6379'
 ```
 
 Or you can use `docker run` directly:
@@ -199,6 +216,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-redis \
+  -p 6379:6379 \
   -d \
   launcher.gcr.io/google/redis3
 ```
@@ -217,6 +235,8 @@ services:
   redis:
     container_name: some-redis
     image: launcher.gcr.io/google/redis3
+    ports:
+      - '6379:6379'
     volumes:
       - /path/to/your/redis/data/directory:/data
 ```
@@ -226,6 +246,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-redis \
+  -p 6379:6379 \
   -v /path/to/your/redis/data/directory:/data \
   -d \
   launcher.gcr.io/google/redis3
@@ -269,6 +290,8 @@ services:
     image: launcher.gcr.io/google/redis3 \
     command:
       - /etc/redis/redis.conf
+    ports:
+      - '6379:6379'
     volumes:
       - /path/to/your/redis.conf:/etc/redis/redis.conf
 ```
@@ -278,6 +301,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-redis \
+  -p 6379:6379 \
   -v /path/to/your/redis.conf:/etc/redis/redis.conf \
   -d \
   launcher.gcr.io/google/redis3 \
