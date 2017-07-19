@@ -33,7 +33,7 @@ RUN set -x \
 # Install Redis Search
 ENV REDIS_VERSION {{ $redis.Major }}
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-{{ $redis.Version }}.tar.gz
-ENV REDIS_DOWNLOAD_SHA {{ $redis.Sha }}
+ENV REDIS_DOWNLOAD_SHA {{ $redis.Sha1 }}
 
 # for redis-sentinel see: http://redis.io/topics/sentinel
 RUN set -ex \
