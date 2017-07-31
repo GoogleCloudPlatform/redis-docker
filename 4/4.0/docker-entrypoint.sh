@@ -1,3 +1,5 @@
+#!/bin/bash -eu
+#
 # Copyright (c) 2017, Google Inc.
 # All rights reserved.
 #
@@ -23,31 +25,16 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-versions:
-  - dir: '3/3.2'
-    repo: redis3
-    tags:
-      - '3.2.9'
-      - '3.2'
-      - '3'
-    from: &from gcr.io/google-appengine/debian8
-    packages:
-      gosu: &gosu
-        version: '1.10'
-        gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-      redis:
-        sha1: 6eaacfa983b287e440d0839ead20c2231749d5d6b78bbe0e0ffa3a890c59ff26
-        version: '3.2.9'
-  - dir: '4/4.0'
-    repo: redis4
-    tags:
-      - '4.0.1'
-      - '4.0'
-      - '4'
-      - latest
-    from: *from
-    packages:
-      gosu: *gosu
-      redis:
-        sha1: 2049cd6ae9167f258705081a6ef23bb80b7eff9ff3d0d7481e89510f27457591
-        version: '4.0.1'
+# first arg is `-f` or `--some-option`
+# or first arg is `something.conf`
+if [ "${1#-}" != "$1" ] || [ "${1%.conf}" != "$1" ]; then
+    set -- redis-server "$@"
+fi
+
+# allow the container to be started with `--user`
+if [ "$1" = 'redis-server' -a "$(id -u)" = '0' ]; then
+    chown -R redis .
+    exec gosu redis "$0" "$@"
+fi
+
+exec "$@"
