@@ -1,11 +1,8 @@
-FROM {{ .From }}
+FROM gcr.io/google-appengine/debian8
 
 # Get the list of packages from the base image.
 COPY download_source /tmp
 RUN /tmp/download_source blacklist-all-current
-
-{{- $gosu := index .Packages "gosu" }}
-{{- $redis := index .Packages "redis" }}
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r redis && useradd -r -g redis redis
@@ -16,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 # add gosu for easy step-down from root
-ENV GOSU_VERSION {{ $gosu.Version }}
+ENV GOSU_VERSION 1.10
 RUN set -x \
 	&& wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
@@ -24,16 +21,16 @@ RUN set -x \
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 	# extract gosu binary and check signature
 	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --keyserver pgp.mit.edu --recv-keys {{ $gosu.Gpg }} \
+	&& gpg --keyserver pgp.mit.edu --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true
 
 # Install Redis Search
-ENV REDIS_VERSION {{ $redis.Version }}
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-{{ $redis.Version }}.tar.gz
-ENV REDIS_DOWNLOAD_SHA {{ $redis.Sha256 }}
+ENV REDIS_VERSION 4.0.1
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-4.0.1.tar.gz
+ENV REDIS_DOWNLOAD_SHA 2049cd6ae9167f258705081a6ef23bb80b7eff9ff3d0d7481e89510f27457591
 
 # for redis-sentinel see: http://redis.io/topics/sentinel
 RUN set -ex \
