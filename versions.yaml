@@ -27,7 +27,7 @@ versions:
   - dir: '3/3.2'
     repo: redis3
     tags:
-      - '3.2.9'
+      - '3.2.10'
       - '3.2'
       - '3'
       - latest
@@ -37,8 +37,8 @@ versions:
         version: '1.10'
         gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       redis:
-        sha256: 6eaacfa983b287e440d0839ead20c2231749d5d6b78bbe0e0ffa3a890c59ff26
-        version: '3.2.9'
+        sha256: 411c604a716104f7f5a326abfad32de9cea10f15f987bec45cf86f315e9e63a0
+        version: '3.2.10'
   - dir: '4/4.0'
     repo: redis4
     tags:
