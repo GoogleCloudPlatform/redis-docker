@@ -1,9 +1,6 @@
 FROM {{ .From }}
 
 # Get the list of packages from the base image.
-COPY download_source /tmp
-RUN /tmp/download_source blacklist-all-current
-
 {{- $gosu := index .Packages "gosu" }}
 {{- $redis := index .Packages "redis" }}
 
@@ -84,7 +81,3 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 6379
 CMD [ "redis-server" ]
-
-# Download source code for GPL packages.
-RUN /tmp/download_source download /usr/local/src \
-	&& rm /tmp/download_source
