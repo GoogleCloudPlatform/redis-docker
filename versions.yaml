@@ -23,6 +23,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+_variables:
+  from: &from gcr.io/google-appengine/debian8
+  gosu: &gosu
+    version: '1.10'
+    gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+
 versions:
   - dir: '3/3.2'
     repo: redis3
@@ -31,18 +37,16 @@ versions:
       - '3.2'
       - '3'
       - latest
-    from: &from gcr.io/google-appengine/debian8
+    from: *from
     packages:
-      gosu: &gosu
-        version: '1.10'
-        gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+      gosu: *gosu
       redis:
         sha256: 31ae927cab09f90c9ca5954aab7aeecc3bb4da6087d3d12ba0a929ceb54081b5
         version: '3.2.11'
   - dir: '4/4.0'
     repo: redis4
     tags:
-      - '4.0.2'
+      - '4.0.6'
       - '4.0'
       - '4'
       - latest
@@ -50,5 +54,5 @@ versions:
     packages:
       gosu: *gosu
       redis:
-        sha256: b1a0915dbc91b979d06df1977fe594c3fa9b189f1f3d38743a2948c9f7634813
-        version: '4.0.2'
+        sha256: 769b5d69ec237c3e0481a262ff5306ce30db9b5c8ceb14d1023491ca7be5f6fa
+        version: '4.0.6'
