@@ -24,14 +24,14 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 setup:
-- command: [docker, run, --privileged=true, --name, some-redis, -d, '$IMAGE']
+- command: [docker, run, --privileged=true, --name, some-redis-$UNIQUE-id, -d, '$IMAGE']
 - command: [sleep, 5s]
 
 teardown:
-- command: [docker, stop, some-redis]
-- command: [docker, rm, some-redis]
+- command: [docker, stop, some-redis-$UNIQUE-id]
+- command: [docker, rm, some-redis-$UNIQUE-id]
 
-target: some-redis
+target: some-redis-$UNIQUE-id
 tests:
 - name: Can set a new key
   command: [redis-cli, set, mykey, test-value]
