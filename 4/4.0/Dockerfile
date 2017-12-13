@@ -26,9 +26,9 @@ RUN set -x \
 	&& gosu nobody true
 
 # Install Redis Search
-ENV REDIS_VERSION 4.0.2
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-4.0.2.tar.gz
-ENV REDIS_DOWNLOAD_SHA b1a0915dbc91b979d06df1977fe594c3fa9b189f1f3d38743a2948c9f7634813
+ENV REDIS_VERSION 4.0.6
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-4.0.6.tar.gz
+ENV REDIS_DOWNLOAD_SHA 769b5d69ec237c3e0481a262ff5306ce30db9b5c8ceb14d1023491ca7be5f6fa
 
 # for redis-sentinel see: http://redis.io/topics/sentinel
 RUN set -ex \
