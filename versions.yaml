@@ -46,7 +46,7 @@ versions:
   - dir: '4/4.0'
     repo: redis4
     tags:
-      - '4.0.7'
+      - '4.0.8'
       - '4.0'
       - '4'
       - latest
@@ -54,5 +54,5 @@ versions:
     packages:
       gosu: *gosu
       redis:
-        sha256: 1bba546d44fb40e1fd8be1a15e1a9cc6484bceeea0bbd52919eebc656661ecd1
-        version: '4.0.7'
+        sha256: ff0c38b8c156319249fec61e5018cf5b5fe63a65b61690bec798f4c998c232ad
+        version: '4.0.8'
