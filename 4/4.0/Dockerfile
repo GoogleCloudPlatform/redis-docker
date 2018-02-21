@@ -1,9 +1,19 @@
-FROM gcr.io/google-appengine/debian8
+FROM gcr.io/google-appengine/debian9
 
 # Get the list of packages from the base image.
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r redis && useradd -r -g redis redis
+
+RUN set -ex; \
+        if ! command -v gpg > /dev/null; then \
+                apt-get update; \
+                apt-get install -y --no-install-recommends \
+                        gnupg \
+			dirmngr \
+                ; \
+                rm -rf /var/lib/apt/lists/*; \
+        fi
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
