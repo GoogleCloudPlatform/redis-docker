@@ -5,6 +5,16 @@ FROM gcr.io/google-appengine/debian8
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r redis && useradd -r -g redis redis
 
+RUN set -ex; \
+        if ! command -v gpg > /dev/null; then \
+                apt-get update; \
+                apt-get install -y --no-install-recommends \
+                        gnupg \
+			dirmngr \
+                ; \
+                rm -rf /var/lib/apt/lists/*; \
+        fi
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
 		wget \
@@ -12,6 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # add gosu for easy step-down from root
 ENV GOSU_VERSION 1.10
+ENV GOSU_GPG B42F6819007F00F88E364FD4036A9C25BF357DD4
+
 RUN set -x \
 	&& wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
@@ -19,16 +31,30 @@ RUN set -x \
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 	# extract gosu binary and check signature
 	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+	&& found='' && \
+	for server in \
+		pool.sks-keyservers.net \
+		na.pool.sks-keyservers.net \
+		eu.pool.sks-keyservers.net \
+		oc.pool.sks-keyservers.net \
+		ha.pool.sks-keyservers.net \
+		hkp://p80.pool.sks-keyservers.net:80 \
+		hkp://keyserver.ubuntu.com:80 \
+		pgp.mit.edu \
+	; do \
+		gpg --keyserver $server --recv-keys $GOSU_GPG \
+			&& found=yes && break; \
+	done; \
+	test -n "$found" \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
-	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
+	&& rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true
 
 # Install Redis Search
-ENV REDIS_VERSION 3.2.11
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-3.2.11.tar.gz
-ENV REDIS_DOWNLOAD_SHA 31ae927cab09f90c9ca5954aab7aeecc3bb4da6087d3d12ba0a929ceb54081b5
+ENV REDIS_VERSION 4.0.9
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-4.0.9.tar.gz
+ENV REDIS_DOWNLOAD_SHA df4f73bc318e2f9ffb2d169a922dec57ec7c73dd07bccf875695dbeecd5ec510
 
 # for redis-sentinel see: http://redis.io/topics/sentinel
 RUN set -ex \
