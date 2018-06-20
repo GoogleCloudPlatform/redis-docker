@@ -6,14 +6,14 @@ FROM gcr.io/google-appengine/debian9
 RUN groupadd -r redis && useradd -r -g redis redis
 
 RUN set -ex; \
-        if ! command -v gpg > /dev/null; then \
-                apt-get update; \
-                apt-get install -y --no-install-recommends \
-                        gnupg \
+	if ! command -v gpg > /dev/null; then \
+		apt-get update; \
+		apt-get install -y --no-install-recommends \
+			gnupg \
 			dirmngr \
-                ; \
-                rm -rf /var/lib/apt/lists/*; \
-        fi
+		; \
+		rm -rf /var/lib/apt/lists/*; \
+	fi
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
