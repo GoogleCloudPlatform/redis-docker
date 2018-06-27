@@ -34,34 +34,34 @@ versions:
   - dir: '3/debian8/3.2'
     repo: redis3
     tags:
-      - '3.2.11-debian8'
+      - '3.2.12-debian8'
       - '3.2-debian8'
       - '3-debian8'
     from: *from8
     packages:
       gosu: *gosu
       redis:
-        sha256: 31ae927cab09f90c9ca5954aab7aeecc3bb4da6087d3d12ba0a929ceb54081b5
-        version: '3.2.11'
+        sha256: 98c4254ae1be4e452aa7884245471501c9aa657993e0318d88f048093e7f88fd
+        version: '3.2.12'
   - dir: '4/debian8/4.0'
     repo: redis4
     tags:
-      - '4.0.9-debian8'
+      - '4.0.10-debian8'
       - '4.0-debian8'
       - '4-debian8'
     from: *from8
     packages:
       gosu: *gosu
       redis:
-        sha256: df4f73bc318e2f9ffb2d169a922dec57ec7c73dd07bccf875695dbeecd5ec510
-        version: '4.0.9'
+        sha256: 1db67435a704f8d18aec9b9637b373c34aa233d65b6e174bdac4c1b161f38ca4
+        version: '4.0.10'
   - dir: '3/debian9/3.2'
     repo: redis3
     tags:
-      - '3.2.11-debian9'
+      - '3.2.12-debian9'
       - '3.2-debian9'
       - '3-debian9'
-      - '3.2.11'
+      - '3.2.12'
       - '3.2'
       - '3'
       - latest
@@ -69,15 +69,15 @@ versions:
     packages:
       gosu: *gosu
       redis:
-        sha256: 31ae927cab09f90c9ca5954aab7aeecc3bb4da6087d3d12ba0a929ceb54081b5
-        version: '3.2.11'
+        sha256: 98c4254ae1be4e452aa7884245471501c9aa657993e0318d88f048093e7f88fd
+        version: '3.2.12'
   - dir: '4/debian9/4.0'
     repo: redis4
     tags:
-      - '4.0.9-debian9'
+      - '4.0.10-debian9'
       - '4.0-debian9'
       - '4-debian9'
-      - '4.0.9'
+      - '4.0.10'
       - '4.0'
       - '4'
       - latest
@@ -85,5 +85,5 @@ versions:
     packages:
       gosu: *gosu
       redis:
-        sha256: df4f73bc318e2f9ffb2d169a922dec57ec7c73dd07bccf875695dbeecd5ec510
-        version: '4.0.9'
+        sha256: 1db67435a704f8d18aec9b9637b373c34aa233d65b6e174bdac4c1b161f38ca4
+        version: '4.0.10'
