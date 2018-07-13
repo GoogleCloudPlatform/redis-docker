@@ -87,3 +87,6 @@ versions:
       redis:
         sha256: 1db67435a704f8d18aec9b9637b373c34aa233d65b6e174bdac4c1b161f38ca4
         version: '4.0.10'
+
+cloudbuild:
+  enable_parallel: true
