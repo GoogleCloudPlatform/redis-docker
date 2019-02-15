@@ -35,8 +35,7 @@ Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlat
 
 # <a name="using-kubernetes"></a>Using Kubernetes
 
-Consult [Launcher container documentation](https://cloud.google.com/launcher/docs/launcher-container)
-for additional information about setting up your Kubernetes environment.
+Quick start [Kubernetes cluster](https://cloud.google.com/kubernetes-engine/docs/quickstart) in Google cloud. 
 
 ## <a name="running-redis-kubernetes"></a>Running Redis
 
