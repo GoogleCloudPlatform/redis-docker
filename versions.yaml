@@ -25,36 +25,11 @@
 
 _variables:
   from9: &from9 gcr.io/google-appengine/debian9
-  from8: &from8 gcr.io/google-appengine/debian8
   gosu: &gosu
     version: '1.10'
     gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
 
 versions:
-  - dir: '3/debian8/3.2'
-    repo: redis3
-    tags:
-      - '3.2.12-debian8'
-      - '3.2-debian8'
-      - '3-debian8'
-    from: *from8
-    packages:
-      gosu: *gosu
-      redis:
-        sha256: 98c4254ae1be4e452aa7884245471501c9aa657993e0318d88f048093e7f88fd
-        version: '3.2.12'
-  - dir: '4/debian8/4.0'
-    repo: redis4
-    tags:
-      - '4.0.12-debian8'
-      - '4.0-debian8'
-      - '4-debian8'
-    from: *from8
-    packages:
-      gosu: *gosu
-      redis:
-        sha256: 6447259d2eed426a949c9c13f8fdb2d91fb66d9dc915dd50db13b87f46d93162
-        version: '4.0.12'
   - dir: '3/debian9/3.2'
     repo: redis3
     tags:
