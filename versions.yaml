@@ -49,10 +49,10 @@ versions:
   - dir: '4/debian9/4.0'
     repo: redis4
     tags:
-      - '4.0.12-debian9'
+      - '4.0.13-debian9'
       - '4.0-debian9'
       - '4-debian9'
-      - '4.0.12'
+      - '4.0.13'
       - '4.0'
       - '4'
       - latest
@@ -60,8 +60,8 @@ versions:
     packages:
       gosu: *gosu
       redis:
-        sha256: 6447259d2eed426a949c9c13f8fdb2d91fb66d9dc915dd50db13b87f46d93162
-        version: '4.0.12'
+        sha256: 17d955227966dcd68590be6139e5fe7f2d19fc4fb7334248a904ea9cdd30c1d4
+        version: '4.0.13'
 
 cloudbuild:
   enable_parallel: true
