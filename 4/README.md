@@ -2,7 +2,7 @@
 
 This image contains an installation Redis 4.x.
 
-For more information, see the [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/redis4).
+For more information, see the [Official Image Marketplace Page](https://console.cloud.google.com/marketplace/details/google/redis4).
 
 Pull command (first install [gcloud](https://cloud.google.com/sdk/downloads)):
 
