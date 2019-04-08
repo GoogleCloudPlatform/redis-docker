@@ -35,7 +35,7 @@ Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlat
 
 # <a name="using-kubernetes"></a>Using Kubernetes
 
-Consult [Launcher container documentation](https://cloud.google.com/launcher/docs/launcher-container)
+Consult [Marketplace container documentation](https://cloud.google.com/marketplace/docs/marketplace-container)
 for additional information about setting up your Kubernetes environment.
 
 ## <a name="running-redis-kubernetes"></a>Running Redis
@@ -192,7 +192,7 @@ See [Volume reference](#references-volumes) for more details.
 
 # <a name="using-docker"></a>Using Docker
 
-Consult [Launcher container documentation](https://cloud.google.com/launcher/docs/launcher-container)
+Consult [Marketplace container documentation](https://cloud.google.com/marketplace/docs/marketplace-container)
 for additional information about setting up your Docker environment.
 
 ## <a name="running-redis-docker"></a>Running Redis
@@ -287,7 +287,7 @@ version: '2'
 services:
   redis:
     container_name: some-redis
-    image: launcher.gcr.io/google/redis4 \
+    image: launcher.gcr.io/google/redis4
     command:
       - /etc/redis/redis.conf
     ports:
