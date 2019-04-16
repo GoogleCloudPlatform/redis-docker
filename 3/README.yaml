@@ -25,8 +25,8 @@
 
 # Used with http://github.com/GoogleCloudPlatform/runtimes-common/tree/master/docgen
 _templates:
-- &Image launcher.gcr.io/google/redis3
-- &PullCommand gcloud docker -- pull launcher.gcr.io/google/redis3
+- &Image marketplace.gcr.io/google/redis3
+- &PullCommand gcloud docker -- pull marketplace.gcr.io/google/redis3
 - &ServiceArgs
   name: redis
   image: *Image
