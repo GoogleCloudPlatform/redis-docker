@@ -1,4 +1,6 @@
-# Copyright (c) 2018, Google Inc.
+#!/bin/bash -eu
+#
+# Copyright (c) 2017, Google Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -23,60 +25,16 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-_variables:
-  from9: &from9 gcr.io/google-appengine/debian9
-  gosu: &gosu
-    version: '1.10'
-    gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+# first arg is `-f` or `--some-option`
+# or first arg is `something.conf`
+if [ "${1#-}" != "$1" ] || [ "${1%.conf}" != "$1" ]; then
+    set -- redis-server "$@"
+fi
 
-versions:
-  - dir: '3/debian9/3.2'
-    repo: redis3
-    tags:
-      - '3.2.13-debian9'
-      - '3.2-debian9'
-      - '3-debian9'
-      - '3.2.13'
-      - '3.2'
-      - '3'
-      - latest
-    from: *from9
-    packages:
-      gosu: *gosu
-      redis:
-        sha256: 862979c9853fdb1d275d9eb9077f34621596fec1843e3e7f2e2f09ce09a387ba
-        version: '3.2.13'
-  - dir: '4/debian9/4.0'
-    repo: redis4
-    tags:
-      - '4.0.14-debian9'
-      - '4.0-debian9'
-      - '4-debian9'
-      - '4.0.14'
-      - '4.0'
-      - '4'
-      - latest
-    from: *from9
-    packages:
-      gosu: *gosu
-      redis:
-        sha256: 1e1e18420a86cfb285933123b04a82e1ebda20bfb0a289472745a087587e93a7
-        version: '4.0.14'
-  - dir: '5/debian9/5.0'
-    repo: redis5
-    tags:
-      - '5.0.5-debian9'
-      - '5.0-debian9'
-      - '5-debian9'
-      - '5.0.5'
-      - '5.0'
-      - '5'
-    from: *from9
-    packages:
-      gosu: *gosu
-      redis:
-        sha256: 2139009799d21d8ff94fc40b7f36ac46699b9e1254086299f8d3b223ca54a375
-        version: '5.0.5'
+# allow the container to be started with `--user`
+if [ "$1" = 'redis-server' -a "$(id -u)" = '0' ]; then
+    chown -R redis .
+    exec gosu redis "$0" "$@"
+fi
 
-cloudbuild:
-  enable_parallel: true
+exec "$@"
