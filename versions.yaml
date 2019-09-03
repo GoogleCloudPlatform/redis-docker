@@ -98,5 +98,7 @@ versions:
       exporter:
         sha1: 7261fba6fcb927b85de6fdc2576813b5a97f976f
         version: '1.1.0'
+    excludeTests:
+    - tests/functional_tests/set_get_test.yaml
 cloudbuild:
   enable_parallel: true
