@@ -48,6 +48,8 @@ versions:
       redis:
         sha256: 862979c9853fdb1d275d9eb9077f34621596fec1843e3e7f2e2f09ce09a387ba
         version: '3.2.13'
+    excludeTests:
+    - tests/functional_tests/redis_exporter_test.yaml
 
   # Redis 4
   - dir: '4/debian9/4.0'
@@ -67,6 +69,8 @@ versions:
       redis:
         sha256: 1e1e18420a86cfb285933123b04a82e1ebda20bfb0a289472745a087587e93a7
         version: '4.0.14'
+    excludeTests:
+    - tests/functional_tests/redis_exporter_test.yaml
 
   # Redis 5
   - dir: '5/debian9/5.0'
@@ -85,6 +89,8 @@ versions:
       redis:
         sha256: 2139009799d21d8ff94fc40b7f36ac46699b9e1254086299f8d3b223ca54a375
         version: '5.0.5'
+    excludeTests:
+    - tests/functional_tests/redis_exporter_test.yaml
 
   # Redis Exporter for Prometheus
   - dir: 'exporter'
