@@ -56,6 +56,8 @@ ENV REDIS_VERSION 4.0.14
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-4.0.14.tar.gz
 ENV REDIS_DOWNLOAD_SHA 1e1e18420a86cfb285933123b04a82e1ebda20bfb0a289472745a087587e93a7
 
+ENV C2D_RELEASE=${REDIS_VERSION}
+
 # for redis-sentinel see: http://redis.io/topics/sentinel
 RUN set -ex \
 	\
