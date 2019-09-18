@@ -44,6 +44,8 @@ ENV REDIS_VERSION {{ $redis.Version }}
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-{{ $redis.Version }}.tar.gz
 ENV REDIS_DOWNLOAD_SHA {{ $redis.Sha256 }}
 
+ENV C2D_RELEASE=${REDIS_VERSION}
+
 # for redis-sentinel see: http://redis.io/topics/sentinel
 RUN set -ex \
 	\
