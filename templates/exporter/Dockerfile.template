@@ -8,8 +8,7 @@ ENV EXPORTER_SHA1 {{ $exporter.Sha1 }}
 ENV NOTICES_SHA256 {{ $template.exporter_notices_check_sum }}
 
 # Install Dependencies
-RUN set -x && \
-    apt-get update -y && \
+RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
     curl
 

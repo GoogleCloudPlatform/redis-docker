@@ -8,8 +8,7 @@ ENV EXPORTER_SHA1 3de72cd115b1f93ccff01458ba2806c177539f78
 ENV NOTICES_SHA256 71e6cf75de2d43c4477212c0f9feddec0754e5708fbe1b506caffcda9801c8aa
 
 # Install Dependencies
-RUN set -x && \
-    apt-get update -y && \
+RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
     curl
 
