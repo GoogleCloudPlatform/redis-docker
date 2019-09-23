@@ -97,13 +97,16 @@ versions:
     templateSubDir: exporter
     repo: redis5
     tags:
-      - 'redis-exporter'
-      - 'redis-exporter-1.1.0'
+      - 'exporter'
+      - 'exporter-1.2'
+      - 'exporter-1.2.0'
     from: *from9
+    templateArgs:
+      exporter_notices_check_sum: 71e6cf75de2d43c4477212c0f9feddec0754e5708fbe1b506caffcda9801c8aa
     packages:
       exporter:
-        sha1: 7261fba6fcb927b85de6fdc2576813b5a97f976f
-        version: '1.1.0'
+        sha1: 3de72cd115b1f93ccff01458ba2806c177539f78
+        version: '1.2.0'
     excludeTests:
     - tests/functional_tests/set_get_test.yaml
 cloudbuild:
