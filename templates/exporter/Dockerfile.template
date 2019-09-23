@@ -1,21 +1,29 @@
 FROM {{ .From }}
 {{ $exporter := index .Packages "exporter" }}
-
+{{ $template := index .TemplateArgs }}
 # Get the list of packages from the base image.
 ENV EXPORTER_VERSION {{ $exporter.Version }}
 ENV EXPORTER_SHA1 {{ $exporter.Sha1 }}
+
+ENV NOTICES_SHA256 {{ $template.exporter_notices_check_sum }}
 
 # Install Dependencies
 RUN set -x && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends \
-    curl && \
-    govendor
+    curl
 
 # Download and Extract binaries
 RUN curl -L -o redis-exporter.tar.gz https://github.com/oliver006/redis_exporter/releases/download/v${EXPORTER_VERSION}/redis_exporter-v${EXPORTER_VERSION}.linux-amd64.tar.gz && \
     echo "${EXPORTER_SHA1} *redis-exporter.tar.gz" | sha1sum -c - && \
     tar -xvf redis-exporter.tar.gz -C / --strip-components=1 && \
     chmod +x /redis_exporter
+
+
+# Copy licenses and check them
+COPY LICENSE /usr/share/doc
+COPY NOTICES /usr/share/doc
+RUN set -eux \
+    && echo "${NOTICES_SHA256}" /usr/share/doc/NOTICES | sha256sum -c
 
 ENTRYPOINT [ "/redis_exporter" ]
