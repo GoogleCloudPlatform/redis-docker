@@ -1,8 +1,7 @@
 FROM {{ .From }}
+{{ $exporter := index .Packages "exporter" }}
 
 # Get the list of packages from the base image.
-{{- $exporter := index .Packages "exporter" }}
-
 ENV EXPORTER_VERSION {{ $exporter.Version }}
 ENV EXPORTER_SHA1 {{ $exporter.Sha1 }}
 
@@ -10,13 +9,13 @@ ENV EXPORTER_SHA1 {{ $exporter.Sha1 }}
 RUN set -x && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends \
-    curl
+    curl && \
+    govendor
 
 # Download and Extract binaries
 RUN curl -L -o redis-exporter.tar.gz https://github.com/oliver006/redis_exporter/releases/download/v${EXPORTER_VERSION}/redis_exporter-v${EXPORTER_VERSION}.linux-amd64.tar.gz && \
     echo "${EXPORTER_SHA1} *redis-exporter.tar.gz" | sha1sum -c - && \
     tar -xvf redis-exporter.tar.gz -C / --strip-components=1 && \
     chmod +x /redis_exporter
-
 
 ENTRYPOINT [ "/redis_exporter" ]
