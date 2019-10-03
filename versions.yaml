@@ -65,18 +65,18 @@ versions:
   - dir: '5/debian9/5.0'
     repo: redis5
     tags:
-      - '5.0.5-debian9'
+      - '5.0.6-debian9'
       - '5.0-debian9'
       - '5-debian9'
-      - '5.0.5'
+      - '5.0.6'
       - '5.0'
       - '5'
     from: *from9
     packages:
       gosu: *gosu
       redis:
-        sha256: 2139009799d21d8ff94fc40b7f36ac46699b9e1254086299f8d3b223ca54a375
-        version: '5.0.5'
+        sha256: 6624841267e142c5d5d5be292d705f8fb6070677687c5aad1645421a936d22b3
+        version: '5.0.6'
 
 cloudbuild:
   enable_parallel: true
