@@ -107,8 +107,11 @@ versions:
       exporter_notices_check_sum: 71e6cf75de2d43c4477212c0f9feddec0754e5708fbe1b506caffcda9801c8aa
     packages:
       exporter:
-        sha1: 3de72cd115b1f93ccff01458ba2806c177539f78
         version: '1.2.0'
+        sha1: 3de72cd115b1f93ccff01458ba2806c177539f78
+      golang:
+        version: '1.13'
+        gpg: 68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856
     excludeTests:
     - tests/functional_tests/set_get_test.yaml
 cloudbuild:

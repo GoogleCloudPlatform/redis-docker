@@ -5,24 +5,28 @@ FROM gcr.io/google-appengine/debian9
 ENV EXPORTER_VERSION 1.2.0
 ENV EXPORTER_SHA1 3de72cd115b1f93ccff01458ba2806c177539f78
 
-ENV NOTICES_SHA256 71e6cf75de2d43c4477212c0f9feddec0754e5708fbe1b506caffcda9801c8aa
+ENV GOLANG_VERSION 1.13
+ENV GOLANG_SHA256 68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856
 
 # Install Dependencies
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
-    curl
+    curl \
+    git
 
-# Download and Extract binaries
-RUN curl -L -o redis-exporter.tar.gz https://github.com/oliver006/redis_exporter/releases/download/v${EXPORTER_VERSION}/redis_exporter-v${EXPORTER_VERSION}.linux-amd64.tar.gz && \
-    echo "${EXPORTER_SHA1} *redis-exporter.tar.gz" | sha1sum -c - && \
-    tar -xvf redis-exporter.tar.gz -C / --strip-components=1 && \
-    chmod +x /redis_exporter
+# Download and Extract go binaries
+RUN curl -o go.tar.gz https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
+    && set -eux \
+    && echo "${GOLANG_SHA256} go.tar.gz" | sha256sum -c \
+    && tar -C /usr/local -zxvf go.tar.gz
+
+# Download source and build exporter
+WORKDIR /redis_exporter
+RUN git clone https://github.com/oliver006/redis_exporter --branch=v${EXPORTER_VERSION} /redis_exporter \
+    && export PATH=$PATH:/usr/local/go/bin \
+    && go build \
+    && chmod +x redis_exporter
 
 
-# Copy licenses and check them
-COPY LICENSE /usr/share/doc
-COPY NOTICES /usr/share/doc
-RUN set -eux \
-    && echo "${NOTICES_SHA256}" /usr/share/doc/NOTICES | sha256sum -c
 
-ENTRYPOINT [ "/redis_exporter" ]
+ENTRYPOINT [ "/redis_exporter/redis_exporter" ]
