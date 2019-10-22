@@ -16,7 +16,8 @@ ENV GOLANG_SHA256 {{ $golang.Gpg }}
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
     curl \
-    git
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 # Download and Extract go binaries
 RUN curl -o go.tar.gz https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
@@ -30,7 +31,5 @@ RUN git clone https://github.com/oliver006/redis_exporter --branch=v${EXPORTER_V
     && export PATH=$PATH:/usr/local/go/bin \
     && go build \
     && chmod +x redis_exporter
-
-
 
 ENTRYPOINT [ "/redis_exporter/redis_exporter" ]
