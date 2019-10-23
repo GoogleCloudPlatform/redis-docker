@@ -103,8 +103,6 @@ versions:
       - 'exporter-1.3'
       - 'exporter-1.3.1'
     from: *from9
-    templateArgs:
-      exporter_notices_check_sum: 71e6cf75de2d43c4477212c0f9feddec0754e5708fbe1b506caffcda9801c8aa
     packages:
       exporter:
         version: '1.3.1'
