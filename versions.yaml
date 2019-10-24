@@ -93,7 +93,6 @@ versions:
     excludeTests:
     - tests/functional_tests/redis_exporter_test.yaml
 
-
   # Redis Exporter for Prometheus
   - dir: 'exporter'
     templateSubDir: exporter
@@ -106,11 +105,11 @@ versions:
     packages:
       exporter:
         version: '1.3.1'
-        sha1: d4459037d64b07a6ca7d316904e246b729930a69822301d0c7a018913c9c1fd1
       golang:
         version: '1.13'
         gpg: 68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856
     excludeTests:
     - tests/functional_tests/set_get_test.yaml
+
 cloudbuild:
   enable_parallel: true

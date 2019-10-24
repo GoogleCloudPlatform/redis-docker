@@ -1,6 +1,5 @@
 FROM gcr.io/google-appengine/debian9
 
-# Get the list of packages from the base image.
 ENV EXPORTER_VERSION 1.3.1
 
 ENV GOLANG_VERSION 1.13
