@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 #
-# Copyright (c) 2017, Google Inc.
+# Copyright (c) 2019, Google LLC.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
