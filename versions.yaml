@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Google LLC.
+# Copyright (c) 2019, Google LLC
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -77,10 +77,10 @@ versions:
     templateSubDir: redis
     repo: redis5
     tags:
-      - '5.0.6-debian9'
+      - '5.0.7-debian9'
       - '5.0-debian9'
       - '5-debian9'
-      - '5.0.6'
+      - '5.0.7'
       - '5.0'
       - '5'
       - latest
@@ -88,8 +88,8 @@ versions:
     packages:
       gosu: *gosu
       redis:
-        sha256: 6624841267e142c5d5d5be292d705f8fb6070677687c5aad1645421a936d22b3
-        version: '5.0.6'
+        sha256: 61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82b
+        version: '5.0.7'
     excludeTests:
     - tests/functional_tests/redis_exporter_test.yaml
 
