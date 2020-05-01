@@ -77,10 +77,10 @@ versions:
     templateSubDir: redis
     repo: redis5
     tags:
-      - '5.0.8-debian9'
+      - '5.0.9-debian9'
       - '5.0-debian9'
       - '5-debian9'
-      - '5.0.8'
+      - '5.0.9'
       - '5.0'
       - '5'
       - latest
@@ -88,8 +88,8 @@ versions:
     packages:
       gosu: *gosu
       redis:
-        sha256: f3c7eac42f433326a8d981b50dba0169fdfaf46abb23fcda2f933a7552ee4ed7
-        version: '5.0.8'
+        sha256: 53d0ae164cd33536c3d4b720ae9a128ea6166ebf04ff1add3b85f1242090cb85
+        version: '5.0.9'
     excludeTests:
     - tests/functional_tests/redis_exporter_test.yaml
 
