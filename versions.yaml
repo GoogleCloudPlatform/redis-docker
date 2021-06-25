@@ -30,48 +30,6 @@ _variables:
     gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
 
 versions:
-  # Redis 3
-  - dir: '3/debian9/3.2'
-    templateSubDir: redis
-    repo: redis3
-    tags:
-      - '3.2.13-debian9'
-      - '3.2-debian9'
-      - '3-debian9'
-      - '3.2.13'
-      - '3.2'
-      - '3'
-      - latest
-    from: *from9
-    packages:
-      gosu: *gosu
-      redis:
-        sha256: 862979c9853fdb1d275d9eb9077f34621596fec1843e3e7f2e2f09ce09a387ba
-        version: '3.2.13'
-    excludeTests:
-    - tests/functional_tests/redis_exporter_test.yaml
-
-  # Redis 4
-  - dir: '4/debian9/4.0'
-    templateSubDir: redis
-    repo: redis4
-    tags:
-      - '4.0.14-debian9'
-      - '4.0-debian9'
-      - '4-debian9'
-      - '4.0.14'
-      - '4.0'
-      - '4'
-      - latest
-    from: *from9
-    packages:
-      gosu: *gosu
-      redis:
-        sha256: 1e1e18420a86cfb285933123b04a82e1ebda20bfb0a289472745a087587e93a7
-        version: '4.0.14'
-    excludeTests:
-    - tests/functional_tests/redis_exporter_test.yaml
-
   # Redis 5
   - dir: '5/debian9/5.0'
     templateSubDir: redis
