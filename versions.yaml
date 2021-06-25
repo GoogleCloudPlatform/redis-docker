@@ -95,7 +95,7 @@ versions:
     
     # Redis 6
   - dir: '6/debian9/6.2'
-    templateSubDir: redis
+    templateSubDir: redis6
     repo: redis6
     tags:
       - '6.2.4-debian9'

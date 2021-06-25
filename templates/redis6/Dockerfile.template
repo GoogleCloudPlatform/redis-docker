@@ -1,6 +1,8 @@
-FROM gcr.io/google-appengine/debian9
+FROM {{ .From }}
 
 # Get the list of packages from the base image.
+{{- $gosu := index .Packages "gosu" }}
+{{- $redis := index .Packages "redis" }}
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r redis && useradd -r -g redis redis
@@ -23,8 +25,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 # add gosu for easy step-down from root
-ENV GOSU_VERSION 1.10
-ENV GOSU_GPG B42F6819007F00F88E364FD4036A9C25BF357DD4
+ENV GOSU_VERSION {{ $gosu.Version }}
+ENV GOSU_GPG {{ $gosu.Gpg }}
 
 RUN set -x \
 	&& wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
@@ -33,30 +35,16 @@ RUN set -x \
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 	# extract gosu binary and check signature
 	&& export GNUPGHOME="$(mktemp -d)" \
-	&& found='' && \
-	for server in \
-		pool.sks-keyservers.net \
-		na.pool.sks-keyservers.net \
-		eu.pool.sks-keyservers.net \
-		oc.pool.sks-keyservers.net \
-		ha.pool.sks-keyservers.net \
-		hkp://p80.pool.sks-keyservers.net:80 \
-		hkp://keyserver.ubuntu.com:80 \
-		pgp.mit.edu \
-	; do \
-		gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG \
-			&& found=yes && break; \
-	done; \
-	test -n "$found" \
+	&& {{ `gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG` | KeyServersRetryLoop "\t" }} \
 	&& gpg --no-tty --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true
 
 # Install Redis Search
-ENV REDIS_VERSION 6.2.4
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-6.2.4.tar.gz
-ENV REDIS_DOWNLOAD_SHA ba32c406a10fc2c09426e2be2787d74ff204eb3a2e496d87cff76a476b6ae16e
+ENV REDIS_VERSION {{ $redis.Version }}
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-{{ $redis.Version }}.tar.gz
+ENV REDIS_DOWNLOAD_SHA {{ $redis.Sha256 }}
 
 ENV C2D_RELEASE=${REDIS_VERSION}
 
