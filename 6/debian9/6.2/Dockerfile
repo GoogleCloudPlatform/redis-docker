@@ -92,8 +92,8 @@ VOLUME /data
 WORKDIR /data
 
 # Copy BSD License
-#RUN mkdir -p /usr/share/redis
-#COPY LICENSE /usr/share/redis/
+RUN mkdir -p /usr/share/redis
+COPY LICENSE /usr/share/redis/
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
