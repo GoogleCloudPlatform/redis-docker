@@ -56,19 +56,19 @@ versions:
     templateSubDir: redis6
     repo: redis6
     tags:
-      - '6.2.4-debian9'
+      - '6.2.5-debian9'
       - '6.2-debian9'
       - '6-debian9'
-      - '6.2.4'
-      - '6.2'
+      - '6.2.5'
+      - '6.2'	
       - '6'
       - latest
     from: *from9
     packages:
       gosu: *gosu
       redis:
-        sha256: ba32c406a10fc2c09426e2be2787d74ff204eb3a2e496d87cff76a476b6ae16e
-        version: '6.2.4'
+        sha256: 4b9a75709a1b74b3785e20a6c158cab94cf52298aa381eea947a678a60d551ae
+        version: '6.2.5'
     excludeTests:
     - tests/functional_tests/redis_exporter_test.yaml
     
