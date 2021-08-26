@@ -1,4 +1,4 @@
-FROM gcr.io/google-appengine/debian9
+FROM marketplace.gcr.io/google/debian9
 
 # Get the list of packages from the base image.
 
@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 # add gosu for easy step-down from root
-ENV GOSU_VERSION 1.10
+ENV GOSU_VERSION 1.11
 ENV GOSU_GPG B42F6819007F00F88E364FD4036A9C25BF357DD4
 
 RUN set -x \
@@ -52,9 +52,9 @@ RUN set -x \
 	&& gosu nobody true
 
 # Install Redis Search
-ENV REDIS_VERSION 5.0.9
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-5.0.9.tar.gz
-ENV REDIS_DOWNLOAD_SHA 53d0ae164cd33536c3d4b720ae9a128ea6166ebf04ff1add3b85f1242090cb85
+ENV REDIS_VERSION 5.0.13
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-5.0.13.tar.gz
+ENV REDIS_DOWNLOAD_SHA 2b617aa2d6ad66c6a5d99fc8590c6b83b40d391fd1184c6eeab30df31f6a7208
 
 ENV C2D_RELEASE=${REDIS_VERSION}
 

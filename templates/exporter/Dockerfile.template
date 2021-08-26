@@ -1,12 +1,12 @@
 FROM {{ .From }}
 
-{{ $exporter := index .Packages "exporter" -}}
+{{ $exporter := index .Packages "redis_exporter" -}}
 {{- $golang := index .Packages "golang" -}}
 
 ENV EXPORTER_VERSION {{ $exporter.Version }}
 
 ENV GOLANG_VERSION {{ $golang.Version }}
-ENV GOLANG_SHA256 {{ $golang.Gpg }}
+ENV GOLANG_SHA256 {{ $golang.Sha256 }}
 
 # Install Dependencies
 RUN apt-get update -y && \
