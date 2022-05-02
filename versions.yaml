@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # All rights reserved.
 #
@@ -28,6 +28,27 @@
 cloudbuild:
   enable_parallel: true
 versions:
+- dir: 7/debian9/7.0
+  excludeTests:
+  - tests/functional_tests/redis_exporter_test.yaml
+  from: marketplace.gcr.io/google/debian9
+  packages:
+    gosu:
+      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+      version: '1.11'
+    redis:
+      sha256: 284d8bd1fd85d6a55a05ee4e7c31c31977ad56cbf344ed83790beeb148baa720
+      version: 7.0.0
+  repo: redis7
+  tags:
+  - 7.0.0-debian9
+  - 7.0-debian9
+  - 7-debian9
+  - 7.0.0
+  - '7.0'
+  - '7'
+  - latest
+  templateSubDir: redis7
 - dir: 6/debian9/6.2
   excludeTests:
   - tests/functional_tests/redis_exporter_test.yaml
@@ -37,14 +58,14 @@ versions:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     redis:
-      sha256: 5b2b8b7a50111ef395bf1c1d5be11e6e167ac018125055daa8b5c2317ae131ab
-      version: 6.2.6
+      sha256: b7a79cc3b46d3c6eb52fa37dde34a4a60824079ebdfb3abfbbfa035947c55319
+      version: 6.2.7
   repo: redis6
   tags:
-  - 6.2.6-debian9
+  - 6.2.7-debian9
   - 6.2-debian9
   - 6-debian9
-  - 6.2.6
+  - 6.2.7
   - '6.2'
   - '6'
   - latest
