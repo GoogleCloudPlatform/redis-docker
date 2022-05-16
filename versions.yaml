@@ -28,27 +28,6 @@
 cloudbuild:
   enable_parallel: true
 versions:
-- dir: 7/debian9/7.0
-  excludeTests:
-  - tests/functional_tests/redis_exporter_test.yaml
-  from: marketplace.gcr.io/google/debian9
-  packages:
-    gosu:
-      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-      version: '1.11'
-    redis:
-      sha256: 284d8bd1fd85d6a55a05ee4e7c31c31977ad56cbf344ed83790beeb148baa720
-      version: 7.0.0
-  repo: redis7
-  tags:
-  - 7.0.0-debian9
-  - 7.0-debian9
-  - 7-debian9
-  - 7.0.0
-  - '7.0'
-  - '7'
-  - latest
-  templateSubDir: redis7
 - dir: 6/debian9/6.2
   excludeTests:
   - tests/functional_tests/redis_exporter_test.yaml
