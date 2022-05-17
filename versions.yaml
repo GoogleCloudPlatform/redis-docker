@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # All rights reserved.
 #
@@ -37,14 +37,14 @@ versions:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     redis:
-      sha256: 5b2b8b7a50111ef395bf1c1d5be11e6e167ac018125055daa8b5c2317ae131ab
-      version: 6.2.6
+      sha256: b7a79cc3b46d3c6eb52fa37dde34a4a60824079ebdfb3abfbbfa035947c55319
+      version: 6.2.7
   repo: redis6
   tags:
-  - 6.2.6-debian9
+  - 6.2.7-debian9
   - 6.2-debian9
   - 6-debian9
-  - 6.2.6
+  - 6.2.7
   - '6.2'
   - '6'
   - latest
