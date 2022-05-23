@@ -25,7 +25,7 @@
 
 # Used with http://github.com/GoogleCloudPlatform/runtimes-common/tree/master/docgen
 _templates:
-- &Image marketplace.gcr.io/google/redis6
+- &Image marketplace.gcr.io/google/redis7
 - &PullCommand gcloud docker -- pull marketplace.gcr.io/google/redis6
 - &ServiceArgs
   name: redis
@@ -43,7 +43,7 @@ _templates:
 
 overview:
   description: |-
-    This image contains an installation Redis 6.x.
+    This image contains an installation Redis 7.x.
 
     For more information, see the [Official Image Marketplace Page](https://console.cloud.google.com/marketplace/details/google/redis6).
   dockerfileUrl: https://github.com/GoogleCloudPlatform/redis-docker/tree/master/6

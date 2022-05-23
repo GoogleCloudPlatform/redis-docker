@@ -1,6 +1,6 @@
 # <a name="about"></a>About
 
-This image contains an installation Redis 6.x.
+This image contains an installation Redis 7.x.
 
 For more information, see the [Official Image Marketplace Page](https://console.cloud.google.com/marketplace/details/google/redis6).
 
