@@ -2,12 +2,12 @@
 
 This image contains an installation Redis 7.x.
 
-For more information, see the [Official Image Marketplace Page](https://console.cloud.google.com/marketplace/details/google/redis6).
+For more information, see the [Official Image Marketplace Page](https://console.cloud.google.com/marketplace/details/google/redis7).
 
 Pull command (first install [gcloud](https://cloud.google.com/sdk/downloads)):
 
 ```shell
-gcloud docker -- pull marketplace.gcr.io/google/redis6
+gcloud docker -- pull marketplace.gcr.io/google/redis7
 ```
 
 Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlatform/redis-docker/tree/master/6).
@@ -53,7 +53,7 @@ metadata:
     name: some-redis
 spec:
   containers:
-    - image: marketplace.gcr.io/google/redis6
+    - image: marketplace.gcr.io/google/redis7
       name: redis
 ```
 
@@ -84,7 +84,7 @@ metadata:
     name: some-redis
 spec:
   containers:
-    - image: marketplace.gcr.io/google/redis6
+    - image: marketplace.gcr.io/google/redis7
       name: redis
       volumeMounts:
         - name: redisdata
@@ -165,7 +165,7 @@ metadata:
     name: some-redis
 spec:
   containers:
-    - image: marketplace.gcr.io/google/redis6
+    - image: marketplace.gcr.io/google/redis7
       name: redis
       args:
         - /etc/redis/redis.conf
@@ -206,7 +206,7 @@ version: '2'
 services:
   redis:
     container_name: some-redis
-    image: marketplace.gcr.io/google/redis6
+    image: marketplace.gcr.io/google/redis7
     ports:
       - '6379:6379'
 ```
@@ -218,7 +218,7 @@ docker run \
   --name some-redis \
   -p 6379:6379 \
   -d \
-  marketplace.gcr.io/google/redis6
+  marketplace.gcr.io/google/redis7
 ```
 
 ### <a name="adding-persistence-docker"></a>Adding persistence
@@ -234,7 +234,7 @@ version: '2'
 services:
   redis:
     container_name: some-redis
-    image: marketplace.gcr.io/google/redis6
+    image: marketplace.gcr.io/google/redis7
     ports:
       - '6379:6379'
     volumes:
@@ -249,7 +249,7 @@ docker run \
   -p 6379:6379 \
   -v /path/to/your/redis/data/directory:/data \
   -d \
-  marketplace.gcr.io/google/redis6
+  marketplace.gcr.io/google/redis7
 ```
 
 ## <a name="redis-cli-docker"></a>Redis CLI
@@ -287,7 +287,7 @@ version: '2'
 services:
   redis:
     container_name: some-redis
-    image: marketplace.gcr.io/google/redis6
+    image: marketplace.gcr.io/google/redis7
     command:
       - /etc/redis/redis.conf
     ports:
@@ -304,7 +304,7 @@ docker run \
   -p 6379:6379 \
   -v /path/to/your/redis.conf:/etc/redis/redis.conf \
   -d \
-  marketplace.gcr.io/google/redis6 \
+  marketplace.gcr.io/google/redis7 \
   /etc/redis/redis.conf
 ```
 
