@@ -54,9 +54,9 @@ RUN set -x \
 	&& gosu nobody true
 
 # Install Redis Search
-ENV REDIS_VERSION 7.0.0
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-7.0.0.tar.gz
-ENV REDIS_DOWNLOAD_SHA 284d8bd1fd85d6a55a05ee4e7c31c31977ad56cbf344ed83790beeb148baa720
+ENV REDIS_VERSION 7.0.2
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-7.0.2.tar.gz
+ENV REDIS_DOWNLOAD_SHA 5e57eafe7d4ac5ecb6a7d64d6b61db775616dbf903293b3fcc660716dbda5eeb
 
 ENV C2D_RELEASE=${REDIS_VERSION}
 
