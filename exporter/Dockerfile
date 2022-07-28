@@ -1,4 +1,4 @@
-FROM marketplace.gcr.io/google/debian9
+FROM marketplace.gcr.io/google/debian11
 
 ENV EXPORTER_VERSION 1.3.1
 
