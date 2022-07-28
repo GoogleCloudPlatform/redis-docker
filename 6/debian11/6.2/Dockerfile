@@ -1,4 +1,4 @@
-FROM marketplace.gcr.io/google/debian9
+FROM marketplace.gcr.io/google/debian11
 
 # Get the list of packages from the base image.
 
