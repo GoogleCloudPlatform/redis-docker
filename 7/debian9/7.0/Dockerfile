@@ -1,4 +1,4 @@
-FROM marketplace.gcr.io/google/debian11
+FROM marketplace.gcr.io/google/debian9
 
 # Get the list of packages from the base image.
 
@@ -55,9 +55,9 @@ RUN set -x \
 	&& gosu nobody true
 
 # Install Redis Search
-ENV REDIS_VERSION 6.2.7
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-6.2.7.tar.gz
-ENV REDIS_DOWNLOAD_SHA b7a79cc3b46d3c6eb52fa37dde34a4a60824079ebdfb3abfbbfa035947c55319
+ENV REDIS_VERSION 7.0.4
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-7.0.4.tar.gz
+ENV REDIS_DOWNLOAD_SHA f0e65fda74c44a3dd4fa9d512d4d4d833dd0939c934e946a5c622a630d057f2f
 
 ENV C2D_RELEASE=${REDIS_VERSION}
 

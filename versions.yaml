@@ -28,31 +28,31 @@
 cloudbuild:
   enable_parallel: true
 versions:
-- dir: 7/debian11/7.0
+- dir: 7/debian9/7.0
   excludeTests:
   - tests/functional_tests/redis_exporter_test.yaml
-  from: marketplace.gcr.io/google/debian11
+  from: marketplace.gcr.io/google/debian9
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     redis:
-      sha256: 2cde7d17214ffe305953da9fff12333e8a72caa57fd4923e4872f6362a208e73
-      version: 7.0.3
+      sha256: f0e65fda74c44a3dd4fa9d512d4d4d833dd0939c934e946a5c622a630d057f2f
+      version: 7.0.4
   repo: redis7
   tags:
-  - 7.0.3-debian11
-  - 7.0-debian11
-  - 7-debian11
-  - 7.0.3
+  - 7.0.4-debian9
+  - 7.0-debian9
+  - 7-debian9
+  - 7.0.4
   - '7.0'
   - '7'
   - latest
   templateSubDir: redis7
-- dir: 6/debian11/6.2
+- dir: 6/debian9/6.2
   excludeTests:
   - tests/functional_tests/redis_exporter_test.yaml
-  from: marketplace.gcr.io/google/debian11
+  from: marketplace.gcr.io/google/debian9
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
@@ -62,18 +62,39 @@ versions:
       version: 6.2.7
   repo: redis6
   tags:
-  - 6.2.7-debian11
-  - 6.2-debian11
-  - 6-debian11
+  - 6.2.7-debian9
+  - 6.2-debian9
+  - 6-debian9
   - 6.2.7
   - '6.2'
   - '6'
   - latest
   templateSubDir: redis6
+- dir: 5/debian9/5.0
+  excludeTests:
+  - tests/functional_tests/redis_exporter_test.yaml
+  from: marketplace.gcr.io/google/debian9
+  packages:
+    gosu:
+      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+      version: '1.11'
+    redis:
+      sha256: 3ea5024766d983249e80d4aa9457c897a9f079957d0fb1f35682df233f997f32
+      version: 5.0.14
+  repo: redis5
+  tags:
+  - 5.0.14-debian9
+  - 5.0-debian9
+  - 5-debian9
+  - 5.0.14
+  - '5.0'
+  - '5'
+  - latest
+  templateSubDir: redis5
 - dir: exporter
   excludeTests:
   - tests/functional_tests/set_get_test.yaml
-  from: marketplace.gcr.io/google/debian11
+  from: marketplace.gcr.io/google/debian9
   packages:
     golang:
       sha256: 68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856
