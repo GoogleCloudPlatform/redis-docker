@@ -37,14 +37,14 @@ versions:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     redis:
-      sha256: 2cde7d17214ffe305953da9fff12333e8a72caa57fd4923e4872f6362a208e73
-      version: 7.0.3
+      sha256: 8d327d7e887d1bb308fc37aaf717a0bf79f58129e3739069aaeeae88955ac586
+      version: 7.0.7
   repo: redis7
   tags:
-  - 7.0.3-debian11
+  - 7.0.7-debian11
   - 7.0-debian11
   - 7-debian11
-  - 7.0.3
+  - 7.0.7
   - '7.0'
   - '7'
   - latest
