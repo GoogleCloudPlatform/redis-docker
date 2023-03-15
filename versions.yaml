@@ -31,7 +31,7 @@ versions:
 - dir: 7/debian11/7.0
   excludeTests:
   - tests/functional_tests/redis_exporter_test.yaml
-  from: marketplace.gcr.io/google/debian11
+  from: marketplace.gcr.io/google/c2d-debian11
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
@@ -52,7 +52,7 @@ versions:
 - dir: 6/debian11/6.2
   excludeTests:
   - tests/functional_tests/redis_exporter_test.yaml
-  from: marketplace.gcr.io/google/debian11
+  from: marketplace.gcr.io/google/c2d-debian11
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
@@ -73,7 +73,7 @@ versions:
 - dir: exporter
   excludeTests:
   - tests/functional_tests/set_get_test.yaml
-  from: marketplace.gcr.io/google/debian11
+  from: marketplace.gcr.io/google/c2d-debian11
   packages:
     golang:
       sha256: 68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856
