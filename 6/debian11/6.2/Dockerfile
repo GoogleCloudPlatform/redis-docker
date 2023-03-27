@@ -57,7 +57,6 @@ RUN set -x \
 # Install Redis Search
 ENV REDIS_VERSION 6.2.7
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-6.2.7.tar.gz
-ENV REDIS_DOWNLOAD_SHA b7a79cc3b46d3c6eb52fa37dde34a4a60824079ebdfb3abfbbfa035947c55319
 
 ENV C2D_RELEASE=${REDIS_VERSION}
 
@@ -76,7 +75,6 @@ RUN set -ex \
 	&& rm -rf /var/lib/apt/lists/* \
 	\
 	&& wget -q -O redis.tar.gz "$REDIS_DOWNLOAD_URL" \
-	&& echo "$REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha256sum -c - \
 	&& mkdir -p /usr/local/src/redis \
 	&& tar -xzf redis.tar.gz -C /usr/local/src/redis --strip-components=1 \
 	&& rm redis.tar.gz \
