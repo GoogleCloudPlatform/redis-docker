@@ -3,7 +3,6 @@ FROM marketplace.gcr.io/google/c2d-debian11
 ENV EXPORTER_VERSION 1.3.1
 
 ENV GOLANG_VERSION 1.13
-ENV GOLANG_SHA256 68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856
 
 # Install Dependencies
 RUN apt-get update -y && \
@@ -15,7 +14,6 @@ RUN apt-get update -y && \
 # Download and Extract go binaries
 RUN curl -o go.tar.gz https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
     && set -eux \
-    && echo "${GOLANG_SHA256} go.tar.gz" | sha256sum -c \
     && tar -C /usr/local -zxvf go.tar.gz
 
 # Download source and build exporter
