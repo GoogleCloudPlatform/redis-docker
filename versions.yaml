@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # All rights reserved.
 #
@@ -37,13 +37,13 @@ versions:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     redis:
-      version: 7.0.7
+      version: 7.0.8
   repo: redis7
   tags:
-  - 7.0.7-debian11
+  - 7.0.8-debian11
   - 7.0-debian11
   - 7-debian11
-  - 7.0.7
+  - 7.0.8
   - '7.0'
   - '7'
   - latest
@@ -57,13 +57,13 @@ versions:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     redis:
-      version: 6.2.7
+      version: 6.2.10
   repo: redis6
   tags:
-  - 6.2.7-debian11
+  - 6.2.10-debian11
   - 6.2-debian11
   - 6-debian11
-  - 6.2.7
+  - 6.2.10
   - '6.2'
   - '6'
   - latest
@@ -84,3 +84,4 @@ versions:
   - '1'
   - latest
   templateSubDir: exporter
+
