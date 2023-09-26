@@ -2,7 +2,7 @@ FROM marketplace.gcr.io/google/c2d-debian11
 
 ENV EXPORTER_VERSION 1.54.0
 
-ENV GOLANG_VERSION 1.20
+ENV GOLANG_VERSION 1.21.1
 
 # Install Dependencies
 RUN apt-get update -y && \
