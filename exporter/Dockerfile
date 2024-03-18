@@ -5,7 +5,8 @@ ENV EXPORTER_VERSION 1.58.0
 ENV GOLANG_VERSION 1.21
 
 # Install Dependencies
-RUN apt-get update -y && apt-get install -y ca-certificates \
+RUN apt-get update -y && \ 
+    apt-get install -y ca-certificates \
     apt-get install -y --no-install-recommends \
     curl \
     git \

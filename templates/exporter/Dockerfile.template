@@ -8,7 +8,8 @@ ENV EXPORTER_VERSION {{ $exporter.Version }}
 ENV GOLANG_VERSION {{ $golang.Version }}
 
 # Install Dependencies
-RUN apt-get update -y && apt-get install -y ca-certificates \
+RUN apt-get update -y && \ 
+    apt-get install -y ca-certificates \
     apt-get install -y --no-install-recommends \
     curl \
     git \
