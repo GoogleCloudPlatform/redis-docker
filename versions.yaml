@@ -35,7 +35,7 @@ versions:
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-      version: '1.11'
+      version: '1.17'
     redis:
       version: 7.2.1
   repo: redis7
@@ -55,7 +55,7 @@ versions:
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-      version: '1.11'
+      version: '1.17'
     redis:
       version: 6.2.13
   repo: redis6
@@ -74,13 +74,13 @@ versions:
   from: marketplace.gcr.io/google/c2d-debian11
   packages:
     golang:
-      version: '1.13'
+      version: '1.21'
     redis_exporter:
-      version: 1.3.1
+      version: 1.58.0
   repo: redis-exporter1
   tags:
-  - 1.3.1
-  - '1.3'
+  - 1.58.0
+  - '1.58'
   - '1'
   - latest
   templateSubDir: exporter
