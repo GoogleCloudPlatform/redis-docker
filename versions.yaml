@@ -74,7 +74,7 @@ versions:
   from: marketplace.gcr.io/google/c2d-debian11
   packages:
     golang:
-      version: '1.21'
+      version: '1.20'
     redis_exporter:
       version: 1.58.0
   repo: redis-exporter1

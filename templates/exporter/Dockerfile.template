@@ -8,12 +8,9 @@ ENV EXPORTER_VERSION {{ $exporter.Version }}
 ENV GOLANG_VERSION {{ $golang.Version }}
 
 # Install Dependencies
-RUN apt-get update -y && \ 
-    apt-get install -y ca-certificates \
-    apt-get install -y --no-install-recommends \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends ca-certificates curl git && \
+    rm -rf /var/lib/apt/lists/*
 
 # Download and Extract go binaries
 RUN curl -o go.tar.gz https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
