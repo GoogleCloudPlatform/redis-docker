@@ -1,0 +1,5 @@
+https://github.com//moby/sys
+https://github.com/tianon/gosu
+https://go.googlesource.com/sys
+https://github.com/redis/redis
+https://pkg.go.dev/github.com/radisvaliullin/test-golang/stdlib?tab=licenses
