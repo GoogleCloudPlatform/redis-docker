@@ -1,15 +1,13 @@
 FROM marketplace.gcr.io/google/c2d-debian11
 
-ENV EXPORTER_VERSION 1.54.0
+ENV EXPORTER_VERSION 1.58.0
 
-ENV GOLANG_VERSION 1.21.1
+ENV GOLANG_VERSION 1.20
 
 # Install Dependencies
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends ca-certificates curl git && \
+    rm -rf /var/lib/apt/lists/*
 
 # Download and Extract go binaries
 RUN curl -o go.tar.gz https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
