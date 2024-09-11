@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Google LLC
 #
 # All rights reserved.
 #
@@ -28,59 +28,41 @@
 cloudbuild:
   enable_parallel: true
 versions:
-- dir: 7/debian11/7.2
+# Never update for a later version than Redis 7.2.4
+#  due to its current licensing
+- dir: 7/debian12/7.2
   excludeTests:
   - tests/functional_tests/redis_exporter_test.yaml
-  from: marketplace.gcr.io/google/c2d-debian11
+  from: marketplace.gcr.io/google/debian12
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-      version: '1.11'
+      version: '1.17'
     redis:
-      version: 7.2.1
+      version: 7.2.4
   repo: redis7
   tags:
-  - 7.2.1-debian11
-  - 7.2-debian11
-  - 7-debian11
-  - 7.2.1
+  - 7.2.4-debian12
+  - 7.2-debian12
+  - 7-debian12
+  - 7.2.4
   - '7.2'
   - '7'
   - latest
   templateSubDir: redis7
-- dir: 6/debian11/6.2
-  excludeTests:
-  - tests/functional_tests/redis_exporter_test.yaml
-  from: marketplace.gcr.io/google/c2d-debian11
-  packages:
-    gosu:
-      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-      version: '1.11'
-    redis:
-      version: 6.2.13
-  repo: redis6
-  tags:
-  - 6.2.13-debian11
-  - 6.2-debian11
-  - 6-debian11
-  - 6.2.13
-  - '6.2'
-  - '6'
-  - latest
-  templateSubDir: redis6
 - dir: exporter
   excludeTests:
   - tests/functional_tests/set_get_test.yaml
-  from: marketplace.gcr.io/google/c2d-debian11
+  from: marketplace.gcr.io/google/debian12
   packages:
     golang:
       version: '1.21.1'
     redis_exporter:
-      version: 1.54.0
+      version: 1.63.0
   repo: redis-exporter1
   tags:
-  - 1.54.0
-  - '1.54'
+  - 1.63.0
+  - '1.63'
   - '1'
   - latest
   templateSubDir: exporter
