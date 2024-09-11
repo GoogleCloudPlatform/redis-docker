@@ -1,4 +1,4 @@
-FROM marketplace.gcr.io/google/c2d-debian11
+FROM marketplace.gcr.io/google/debian12
 
 # Get the list of packages from the base image.
 
@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 # add gosu for easy step-down from root
-ENV GOSU_VERSION 1.11
+ENV GOSU_VERSION 1.17
 ENV GOSU_GPG B42F6819007F00F88E364FD4036A9C25BF357DD4
 
 RUN set -x \
@@ -55,8 +55,8 @@ RUN set -x \
 	&& gosu nobody true
 
 # Install Redis Search
-ENV REDIS_VERSION 7.2.1
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-7.2.1.tar.gz
+ENV REDIS_VERSION 7.2.4
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-7.2.4.tar.gz
 
 ENV C2D_RELEASE=${REDIS_VERSION}
 
