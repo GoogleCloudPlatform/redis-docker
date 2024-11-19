@@ -41,6 +41,9 @@ versions:
     redis:
       version: 7.2.4
   repo: redis7
+  annotations:
+  - key: com.googleapis.cloudmarketplace.product.service.name
+    value: services/b811d430-5ef1-420d-a7c1-6c9537ff94d6.cloudpartnerservices.goog
   tags:
   - 7.2.4-debian12
   - 7.2-debian12
