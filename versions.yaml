@@ -26,6 +26,7 @@
 
 
 cloudbuild:
+  docker_image: gcr.io/cloud-builders/docker:24.0.9
   enable_parallel: true
 versions:
 # Never update for a later version than Redis 7.2.4
