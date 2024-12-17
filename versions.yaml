@@ -64,6 +64,9 @@ versions:
     redis_exporter:
       version: 1.63.0
   repo: redis-exporter1
+  annotations:
+  - key: com.googleapis.cloudmarketplace.product.service.name
+    value: services/88d78573-15f3-4af8-8f68-30b957986856.cloudpartnerservices.goog
   tags:
   - 1.63.0
   - '1.63'
